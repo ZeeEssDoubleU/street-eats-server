@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 
 export const Main = styled(Container)`
-	margin: 4rem 0;
+	margin: 4rem auto;
 	padding: 1rem;
 `;
 export const StyledGrid = styled.div`
