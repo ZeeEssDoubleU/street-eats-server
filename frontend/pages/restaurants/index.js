@@ -14,7 +14,7 @@ const restaurants = ({ restaurants }) => {
 	const displayRestaurants = restaurants?.map((restaurant) => (
 		<Grid item key={restaurant.id}>
 			<ListingCard
-				image={`${process.env.NEXT_PUBLIC_API_URL}${restaurant.image[0].url}`}
+				image={restaurant.image[0].url}
 				name={restaurant.name}
 				description={restaurant.description}
 				buttonText="View Menu"
@@ -35,7 +35,9 @@ export default restaurants;
 // ******************
 export const getStaticProps = async () => {
 	try {
-		const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/restaurants`);
+		const { data } = await axios.get(
+			`${process.env.NEXT_PUBLIC_API_URL}/restaurants`,
+		);
 		const restaurants = data;
 
 		return {

@@ -21,7 +21,7 @@ const restaurant = ({ restaurant, dishes }) => {
 	const displayDishes = dishes?.map((dish) => (
 		<Grid item key={dish.id}>
 			<ListingCard
-				image={`${process.env.NEXT_PUBLIC_API_URL}${dish.image.url}`}
+				image={dish.image.url}
 				name={dish.name}
 				description={dish.description}
 				buttonText="Add to Cart"
@@ -74,7 +74,9 @@ const RestaurantName = styled.div`
 export const getStaticPaths = async () => {
 	// call an external API endpoint to get posts
 	try {
-		const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/restaurants`);
+		const response = await axios.get(
+			`${process.env.NEXT_PUBLIC_API_URL}/restaurants`,
+		);
 		const restaurants = response.data;
 		console.log("get restaurants...");
 
