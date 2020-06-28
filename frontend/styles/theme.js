@@ -33,5 +33,6 @@ export default createMuiTheme({
 	},
 	card: {
 		width: "24rem",
+		zIndex: 1,
 	},
 });

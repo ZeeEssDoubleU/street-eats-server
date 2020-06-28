@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
 // import components
-import { CardContent, CardMedia, Typography } from "@material-ui/core";
+import { CardContent, Typography } from "@material-ui/core";
 import Card_withElevate from "./Card_withElevate";
 import CardActionButton from "./CardActionButton";
-
+import CardImage from "./CardImage";
 export const ListingCard = (props) => {
 	const button = (
 		<CardActionButton
@@ -47,7 +47,3 @@ export default ListingCard;
 // ******************
 
 import { StyledCardActions } from "../styles/elements";
-
-const CardImage = styled(CardMedia)`
-	height: 15rem;
-`;

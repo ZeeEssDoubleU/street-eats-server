@@ -105,14 +105,6 @@ const login = (props) => {
 					<Link href="/signup" passHref>
 						<CardActionButton color="primary">Sign Up</CardActionButton>
 					</Link>
-					{/* // TODO: remove when ready */}
-					<CardActionButton
-						onClick={() => {
-							console.log("cookies_test:", Cookies.get());
-						}}
-					>
-						Test
-					</CardActionButton>
 				</StyledCardActions>
 			</Card_withElevate>
 		</Container>
