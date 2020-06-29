@@ -19,9 +19,6 @@ const restaurant = ({ restaurant, dishes }) => {
 	const router = useRouter();
 
 	const displayDishes = dishes?.map((dish) => {
-		// const dishImage = <img src={dish.image.url} />;
-		// console.log("dishImage:", dishImage);
-
 		return (
 			<Grid item key={dish.id}>
 				<ListingCard
@@ -33,6 +30,7 @@ const restaurant = ({ restaurant, dishes }) => {
 						const payload = { dish, restaurant };
 						addItem(payload, state, dispatch);
 					}}
+					price={dish.price}
 				/>
 			</Grid>
 		);

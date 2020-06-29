@@ -34,7 +34,14 @@ export const ListingCard = (props) => {
 				</Typography>
 				<Typography>{props.description}</Typography>
 			</CardContent>
-			<StyledCardActions>{buttonType}</StyledCardActions>
+			<StyledCardActions item>
+				{buttonType}
+				{props.price && (
+					<CardActionButton noClick>
+						<Typography variant="h6">${props.price}</Typography>
+					</CardActionButton>
+				)}
+			</StyledCardActions>
 		</Card_withElevate>
 	);
 };

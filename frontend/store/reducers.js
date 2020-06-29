@@ -14,6 +14,7 @@ export const initState =
 				isAuthenticated: !isEmpty(getUser_current()),
 				user_current: getUser_current(),
 				cart: getSavedCart(),
+				displayCart: false,
 		  }
 		: {};
 
@@ -50,10 +51,7 @@ export const reducer_root = (state, action) => {
 		case actionTypes_cart.TOGGLE_CART:
 			return {
 				...state,
-				cart: {
-					...state.cart,
-					display: action.payload,
-				},
+				diplayCart: action.payload,
 			};
 		default:
 			return state;

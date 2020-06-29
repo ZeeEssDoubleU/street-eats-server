@@ -44,6 +44,6 @@ export const removeRestaurantFromCart = (id, state, dispatch) => {
 export const toggleCart = (state, dispatch) => {
 	dispatch({
 		type: actionTypes_cart.TOGGLE_CART,
-		payload: !state.cart.display,
+		payload: !state.displayCart,
 	});
 };

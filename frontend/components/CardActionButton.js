@@ -11,11 +11,19 @@ import { Button } from "@material-ui/core";
 // forwardRef used to forward link components down to button hwen necessary
 const CardActionButton = forwardRef((props, ref) => {
 	return (
-		<Button {...props} ref={ref} size={props.size || "large"}>
+		<StyledButton {...props} ref={ref} size={props.size || "large"}>
 			{props.children}
-		</Button>
+		</StyledButton>
 	);
 });
 
 CardActionButton.propTypes = {};
 export default CardActionButton;
+
+// ******************
+// styles
+// ******************
+
+const StyledButton = styled(Button)`
+	cursor: ${(props) => (props.noClick ? "pointer" : "default")};
+`;

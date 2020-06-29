@@ -26,11 +26,9 @@ export const StyledActionArea = styled(CardActionArea)`
 `;
 export const StyledCardActions = styled(CardActions)`
 	display: flex;
-	width: 100%;
+
 	padding: 1rem;
-	justify-content: right;
-	justify-items: right;
-	text-justify: right;
+	justify-content: ${(props) => (props.item ? "space-between" : null)};
 `;
 export const StyledNavButton = styled(Button)`
 	height: 4rem;
