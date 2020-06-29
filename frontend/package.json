@@ -28,7 +28,6 @@
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-lazyload": "^2.6.8",
-		"react-progressive-graceful-image": "^0.6.11",
 		"stripe": "^8.67.0",
 		"styled-components": "^5.1.1"
 	},

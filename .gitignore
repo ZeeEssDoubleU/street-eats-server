@@ -7,3 +7,6 @@ node_modules
 # instructions / commands
 aws.md
 commit.md
+
+# database
+street-eats.sql

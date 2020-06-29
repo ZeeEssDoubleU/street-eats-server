@@ -54,7 +54,7 @@ const CardCardItems = ({ restaurant }) => {
 			))}
 			<GridBetween>
 				<Typography variant="h6">Total:</Typography>
-				<Typography variant="h6">${restaurant.items_total}</Typography>
+				<Typography variant="h6">${restaurant.items_price}</Typography>
 			</GridBetween>
 		</Grid>
 	);

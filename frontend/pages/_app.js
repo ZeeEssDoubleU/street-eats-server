@@ -32,11 +32,9 @@ export default ({ Component, pageProps }) => {
 			<MuiThemeProvider theme={theme}>
 				<ThemeProvider theme={theme}>
 					<StoreProvider>
-						<CloudinaryContext cloudName="street-eats">
-							<Layout {...pageProps}>
-								<Component {...pageProps} />
-							</Layout>
-						</CloudinaryContext>
+						<Layout {...pageProps}>
+							<Component {...pageProps} />
+						</Layout>
 					</StoreProvider>
 				</ThemeProvider>
 			</MuiThemeProvider>

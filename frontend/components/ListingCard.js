@@ -23,9 +23,8 @@ export const ListingCard = (props) => {
 			{button}
 		</Link>
 	) : (
-		<>{button}</>
+		button
 	);
-
 	return (
 		<Card_withElevate>
 			<CardImage image={props.image} />

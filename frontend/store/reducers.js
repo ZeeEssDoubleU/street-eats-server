@@ -47,6 +47,14 @@ export const reducer_root = (state, action) => {
 				...state,
 				cart: reducer_removedRestaurant(state.cart, action.payload),
 			};
+		case actionTypes_cart.TOGGLE_CART:
+			return {
+				...state,
+				cart: {
+					...state.cart,
+					display: action.payload,
+				},
+			};
 		default:
 			return state;
 	}
@@ -71,7 +79,8 @@ const reducer_addItem = (cart, payload) => {
 		name: restaurant.name,
 		slug: restaurant.slug,
 		items: [],
-		items_total: 0,
+		items_price: 0,
+		items_count: 0,
 	};
 
 	// check if restaurant has been added to cart
@@ -102,7 +111,9 @@ const reducer_addItem = (cart, payload) => {
 		  });
 
 	// UPDATE restaurant cart total cost
-	updateRestaurant.items_total = updateRestaurant.items_total + newItem.price;
+	updateRestaurant.items_price = updateRestaurant.items_price + newItem.price;
+	updateRestaurant.items_count =
+		updateRestaurant.items_count + newItem.quantity;
 
 	// UPDATE global cart with updated restaurant cart
 	const updateCart = restaurantExists
@@ -154,8 +165,9 @@ const reducer_removeItem = (cart, payload) => {
 			  });
 
 	// UPDATE restaurant cart total cost
-	updateRestaurant.items_total =
-		updateRestaurant.items_total - itemExists.price;
+	updateRestaurant.items_price =
+		updateRestaurant.items_price - itemExists.price;
+	updateRestaurant.items_count = updateRestaurant.items_count - 1;
 
 	// UPDATE global cart with updated restaurant cart
 	const updateCart = cart
