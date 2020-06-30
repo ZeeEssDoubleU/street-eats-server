@@ -100,8 +100,10 @@ const StyledMain = styled(Main)`
 `;
 const StyledDrawer = styled(Drawer)`
 	width: calc(${(props) => props.theme.card.width} + 2rem);
+	max-width: 100%;
 	z-index: ${(props) => props.theme.drawer.zIndex};
 	.MuiDrawer-paper {
 		width: calc(${(props) => props.theme.card.width} + 2rem);
+		max-width: 100%;
 	}
 `;

@@ -28,26 +28,35 @@ const NavMenu = (props) => {
 	const loggedIn = (
 		<>
 			<Link href="/" passHref>
-				<StyledNavButton>
-					{/* TODO: need to add link to avatar pic */}
-					<StyledAvatar alt={`${currentUser}'s avatar`} src="/" />
-					<div>{currentUser}</div>
-				</StyledNavButton>
+				<ResponsiveNavButton isMobile={state.isMobile}>
+					<StyledAvatar
+						alt={`${currentUser}'s avatar`}
+						// TODO: need to add link to avatar pic.  Needs to go back to a profile page
+						src="/restaurants"
+						isMobile={state.isMobile}
+					/>
+					{!state.isMobile && <div>{currentUser}</div>}
+				</ResponsiveNavButton>
 			</Link>
-			<StyledNavButton
+			<ResponsiveNavButton
 				onClick={() => removeCredsFromCookies(state, dispatch)}
+				isMobile={state.isMobile}
 			>
 				Logout
-			</StyledNavButton>
+			</ResponsiveNavButton>
 		</>
 	);
 	const loggedOut = (
 		<>
 			<Link href="/login" passHref>
-				<StyledNavButton>Login</StyledNavButton>
+				<ResponsiveNavButton isMobile={state.isMobile}>
+					Login
+				</ResponsiveNavButton>
 			</Link>
 			<Link href="/signup" passHref>
-				<StyledNavButton>Sign Up</StyledNavButton>
+				<ResponsiveNavButton isMobile={state.isMobile}>
+					Sign Up
+				</ResponsiveNavButton>
 			</Link>
 		</>
 	);
@@ -86,5 +95,9 @@ const Container = styled.div`
 const StyledAvatar = styled(Avatar)`
 	height: 2rem;
 	width: 2rem;
-	margin-right: 0.5rem;
+	margin-right: ${(props) => (props.isMobile ? 0 : "0.5rem")};
+`;
+const ResponsiveNavButton = styled(StyledNavButton)`
+	padding: ${(props) =>
+		props.isMobile === true ? "1rem .25rem" : "1rem"} !important;
 `;

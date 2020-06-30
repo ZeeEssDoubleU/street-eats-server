@@ -35,4 +35,5 @@ export default Card_withElevate;
 
 const StyledCard = styled(Card)`
 	position: relative;
+	max-width: 100%;
 `;
