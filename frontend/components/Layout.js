@@ -29,7 +29,7 @@ const Layout = (props) => {
 						<NavLink
 							href="/restaurants"
 							className="nav-brand"
-							hideCart="mobile"
+							hideCart
 						>
 							<Typography variant="h6">Home</Typography>
 						</NavLink>
@@ -93,12 +93,12 @@ const StyledMain = styled(Main)`
 	right: 0;
 	bottom: 0;
 	width: 100%;
-	transition: right 0.25s, width 0.25s;
 
-	@media (min-width: ${(props) => props.theme.breakpoints.width("md")}px) {
+	${(props) => props.theme.breakpoints.up("lg")} {
 		right: ${(props) =>
 			props.displayCart ? `calc(${props.theme.card.width} + 2rem)` : 0};
 		width: ${(props) => `calc(100% - ${props.theme.card.width} - 2rem)`};
+		transition: right 0.25s, width 0.25s;
 	}
 `;
 const StyledDrawer = styled(Drawer)`

@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import isEmpty from "lodash/fp/isEmpty";
 import Cookies from "js-cookie";
+import { useMediaQuery } from "@material-ui/core";
 // import actions / reducers / utils
 import { actionTypes_auth, getUser_current } from "./actions/auth";
 import { actionTypes_cart, updateCheckout } from "./actions/cart";
@@ -18,7 +19,8 @@ const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
 	const theme = useTheme();
-	const [state, dispatch] = useReducer(reducer_root, initState(theme));
+	const isSmaller_large = useMediaQuery(theme.breakpoints.down("md"));
+	const [state, dispatch] = useReducer(reducer_root, initState(isSmaller_large));
 
 	return (
 		<StoreContext.Provider value={{ state, dispatch }}>

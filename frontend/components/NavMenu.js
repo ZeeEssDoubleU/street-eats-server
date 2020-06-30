@@ -31,27 +31,25 @@ const NavMenu = (props) => {
 	// effect toggles cart on page change
 	useEffect(() => {
 		// hides cart when navigating to new page on mobile
-		if (state.isMobile) {
+		if (state.isSmaller_large) {
 			toggleCart(state, dispatch, "hide");
 		}
 	}, [router.pathname]);
 
 	const loggedIn = (
 		<>
-			<NavLink href="/restaurants" responsive hideCart="mobile">
+			<NavLink href="/restaurants" responsive hideCart>
 				<StyledAvatar
 					alt={`${currentUser}'s avatar`}
 					// TODO: need to add link to avatar pic.  Needs to go back to a profile page
 					src="/restaurants"
-					isMobile={state.isMobile}
 				/>
-				{!state.isMobile && <div>{currentUser}</div>}
+				{!state.isSmaller_large && <div>{currentUser}</div>}
 			</NavLink>
 			<NavLink
 				responsive
 				onClick={() => removeCredsFromCookies(state, dispatch)}
-				hideCart="mobile"
-				href="/login"
+				hideCart
 			>
 				Logout
 			</NavLink>
@@ -59,10 +57,10 @@ const NavMenu = (props) => {
 	);
 	const loggedOut = (
 		<>
-			<NavLink href="/login" responsive hideCart="mobile">
+			<NavLink href="/login" responsive hideCart>
 				Login
 			</NavLink>
-			<NavLink href="/signup" responsive hideCart="mobile">
+			<NavLink href="/signup" responsive hideCart>
 				Sign Up
 			</NavLink>
 		</>
@@ -100,5 +98,9 @@ const Container = styled.div`
 const StyledAvatar = styled(Avatar)`
 	height: 2rem;
 	width: 2rem;
-	margin-right: ${(props) => (props.isMobile ? 0 : "0.5rem")};
+	margin-right: 0;
+
+	${(props) => props.theme.breakpoints.up("md")} {
+		margin-right: 0.5rem;
+	}
 `;

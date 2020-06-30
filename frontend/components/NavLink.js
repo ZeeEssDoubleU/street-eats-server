@@ -15,20 +15,20 @@ import { toggleCart } from "../store/actions/cart";
 const NavLink = (props) => {
 	const { state, dispatch } = useStore();
 
-	const hideCart = () => {
+	const handleOnClick = () => {
+		if (props.onClick) {
+			props.onClick();
+		}
+
 		if (props.hideCart) {
-			if (props.hideCart === "mobile" && state.isMobile) {
+			if (props.hideCart && state.isSmaller_large) {
 				toggleCart(state, dispatch, "hide");
 			}
 		}
 	};
 
 	const button = (
-		<StyledButton
-			onClick={hideCart}
-			responsive={props.responsive}
-			isMobile={state.isMobile}
-		>
+		<StyledButton onClick={handleOnClick} responsive={props.responsive}>
 			{props.children}
 		</StyledButton>
 	);
@@ -50,9 +50,10 @@ export default NavLink;
 // ******************
 export const StyledButton = styled(Button)`
 	height: 4rem;
-	padding: ${(props) =>
-		props.responsive && props.isMobile === true
-			? "1rem .25rem"
-			: "1rem"} !important;
+	padding: ${(props) => (props.responsive ? "1rem .25rem" : "1rem")};
 	color: white;
+
+	${(props) => props.theme.breakpoints.up("md")} {
+		padding: 1rem;
+	}
 `;

@@ -3,20 +3,19 @@ import Cookies from "js-cookie";
 // import actions / utils
 import { actionTypes_auth, getUser_current } from "./actions/auth";
 import { actionTypes_cart, getSavedCart } from "./actions/cart";
-import { actionTypes_layout, getIsMobile } from "./actions/layout";
-import { Restaurant } from "@material-ui/icons";
+import { actionTypes_layout } from "./actions/layout";
 
 // ******************
 // initial state
 // ******************
-export const initState = (theme) =>
+export const initState = (isSmaller_large) =>
 	typeof window !== "undefined"
 		? {
 				isAuthenticated: !isEmpty(getUser_current()),
 				user_current: getUser_current(),
 				cart: getSavedCart(),
-				isMobile: getIsMobile(theme),
-				displayCart: false,
+				isSmaller_large,
+				displayCart: !isSmaller_large,
 		  }
 		: {};
 
@@ -58,7 +57,7 @@ export const reducer_root = (state, action) => {
 		case actionTypes_layout.SET_IS_MOBILE:
 			return {
 				...state,
-				isMobile: action.payload,
+				isSmaller_large: action.payload,
 			};
 
 		default:
