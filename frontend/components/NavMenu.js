@@ -8,6 +8,7 @@ import { ShoppingCartOutlined } from "@material-ui/icons";
 import Cart from "./Cart";
 // import store / utils
 import useStore from "../store/useStore";
+import { useTheme } from "@material-ui/core/styles";
 import { toggleCart, getCartCount } from "../store/actions/cart";
 import { removeCredsFromCookies } from "../store/actions/auth";
 
@@ -16,11 +17,13 @@ import { removeCredsFromCookies } from "../store/actions/auth";
 // ******************
 const NavMenu = (props) => {
 	const { state, dispatch } = useStore();
+	const [cartCount, setCartCount] = useState(getCartCount(state));
 	const currentUser = state.user_current;
 
+	// effect to update cart count on state change
 	useEffect(() => {
-		getCartCount(state);
-	});
+		setCartCount(getCartCount(state));
+	}, [state.cart]);
 
 	const loggedIn = (
 		<>
@@ -54,7 +57,8 @@ const NavMenu = (props) => {
 			{state.isAuthenticated ? loggedIn : loggedOut}
 			<StyledNavButton>
 				<Badge
-					badgeContent={getCartCount(state)}
+					// TODO: for some reason badge does NOT display when page refreshed
+					badgeContent={cartCount}
 					color="secondary"
 					onClick={() => toggleCart(state, dispatch)}
 				>

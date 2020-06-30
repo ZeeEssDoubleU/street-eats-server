@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Head from "next/head";
 import Link from "next/link";
 // import components
-import { AppBar, Drawer, Avatar, Typography } from "@material-ui/core";
+import { AppBar, Drawer, Typography, Hidden } from "@material-ui/core";
 import { ShoppingCartOutlinedIcon } from "@material-ui/icons/";
 import Cart from "./Cart";
 import NavMenu from "./NavMenu";
-// import store / utils
+// import store / utils / hooks
 import useStore from "../store/useStore";
 import { removeCredsFromCookies } from "../store/actions/auth";
+import { useWindowResize } from "../utils/hooks";
 
 // ******************
 // component
 // ******************
 const Layout = (props) => {
+	const { state, dispatch } = useStore();
+	useWindowResize(state, dispatch);
+
 	return (
 		<Flex>
 			<StyledAppBar color="primary">
@@ -30,15 +34,21 @@ const Layout = (props) => {
 					<NavMenu />
 				</Nav>
 			</StyledAppBar>
-			<Main component="main" maxWidth="xl">
+			<StyledMain
+				component="main"
+				maxWidth="xl"
+				displayCart={state.displayCart}
+			>
 				{props.children}
-			</Main>
-			{/* 
-				// TODO: set cart drawer to persistent 
-				// TODO: add toggle to cart drawer 
-				// TODO: consider moving drawer component to layout 
-			*/}
-			<StyledDrawer variant="permanent" anchor="right">
+			</StyledMain>
+			<StyledDrawer
+				variant="persistent"
+				anchor="right"
+				open={state.displayCart}
+				ModalProps={{
+					keepMounted: true, // Better open performance on mobile.
+				}}
+			>
 				<Cart />
 			</StyledDrawer>
 			<footer></footer>
@@ -71,6 +81,22 @@ const Nav = styled.nav`
 const NavBrand = styled.div`
 	display: flex;
 	align-items: center;
+`;
+const StyledMain = styled(Main)`
+	position: absolute;
+	z-index: ${(props) => props.theme.drawer.zIndex - 1};
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	transition: right 0.25s, width 0.25s;
+
+	@media (min-width: ${(props) => props.theme.breakpoints.width("md")}px) {
+		right: ${(props) =>
+			props.displayCart ? `calc(${props.theme.card.width} + 2rem)` : 0};
+		width: ${(props) => `calc(100% - ${props.theme.card.width} - 2rem)`};
+	}
 `;
 const StyledDrawer = styled(Drawer)`
 	width: calc(${(props) => props.theme.card.width} + 2rem);

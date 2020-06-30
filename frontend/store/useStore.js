@@ -11,12 +11,14 @@ import Cookies from "js-cookie";
 import { actionTypes_auth, getUser_current } from "./actions/auth";
 import { actionTypes_cart, updateCheckout } from "./actions/cart";
 import { reducer_root, initState } from "./reducers";
+import { useTheme } from "@material-ui/core/styles";
 
 // ! this causing render error on logout button.  May need to move initial logic to useEffect in StoreProvider
 const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
-	const [state, dispatch] = useReducer(reducer_root, initState);
+	const theme = useTheme();
+	const [state, dispatch] = useReducer(reducer_root, initState(theme));
 
 	return (
 		<StoreContext.Provider value={{ state, dispatch }}>
