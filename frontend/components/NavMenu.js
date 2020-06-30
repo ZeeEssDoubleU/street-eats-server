@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { Avatar, Typography, Badge } from "@material-ui/core";
 import { ShoppingCartOutlined } from "@material-ui/icons";
 import Cart from "./Cart";
+import NavLink from "./NavLink";
 // import store / utils
 import useStore from "../store/useStore";
 import { useTheme } from "@material-ui/core/styles";
@@ -31,50 +32,46 @@ const NavMenu = (props) => {
 	useEffect(() => {
 		// hides cart when navigating to new page on mobile
 		if (state.isMobile) {
-			toggleCart(state, dispatch, false);
+			toggleCart(state, dispatch, "hide");
 		}
 	}, [router.pathname]);
 
 	const loggedIn = (
 		<>
-			<Link href="/" passHref>
-				<ResponsiveNavButton isMobile={state.isMobile}>
-					<StyledAvatar
-						alt={`${currentUser}'s avatar`}
-						// TODO: need to add link to avatar pic.  Needs to go back to a profile page
-						src="/restaurants"
-						isMobile={state.isMobile}
-					/>
-					{!state.isMobile && <div>{currentUser}</div>}
-				</ResponsiveNavButton>
-			</Link>
-			<ResponsiveNavButton
+			<NavLink href="/restaurants" responsive hideCart="mobile">
+				<StyledAvatar
+					alt={`${currentUser}'s avatar`}
+					// TODO: need to add link to avatar pic.  Needs to go back to a profile page
+					src="/restaurants"
+					isMobile={state.isMobile}
+				/>
+				{!state.isMobile && <div>{currentUser}</div>}
+			</NavLink>
+			<NavLink
+				responsive
 				onClick={() => removeCredsFromCookies(state, dispatch)}
-				isMobile={state.isMobile}
+				hideCart="mobile"
+				href="/login"
 			>
 				Logout
-			</ResponsiveNavButton>
+			</NavLink>
 		</>
 	);
 	const loggedOut = (
 		<>
-			<Link href="/login" passHref>
-				<ResponsiveNavButton isMobile={state.isMobile}>
-					Login
-				</ResponsiveNavButton>
-			</Link>
-			<Link href="/signup" passHref>
-				<ResponsiveNavButton isMobile={state.isMobile}>
-					Sign Up
-				</ResponsiveNavButton>
-			</Link>
+			<NavLink href="/login" responsive hideCart="mobile">
+				Login
+			</NavLink>
+			<NavLink href="/signup" responsive hideCart="mobile">
+				Sign Up
+			</NavLink>
 		</>
 	);
 
 	return (
 		<Container>
 			{state.isAuthenticated ? loggedIn : loggedOut}
-			<StyledNavButton>
+			<NavLink>
 				<Badge
 					// TODO: for some reason badge does NOT display when page refreshed
 					badgeContent={cartCount}
@@ -83,7 +80,7 @@ const NavMenu = (props) => {
 				>
 					<ShoppingCartOutlined />
 				</Badge>
-			</StyledNavButton>
+			</NavLink>
 		</Container>
 	);
 };
@@ -96,8 +93,6 @@ export default NavMenu;
 // styles
 // ******************
 
-import { StyledNavButton } from "../styles/elements";
-
 const Container = styled.div`
 	display: flex;
 	align-items: center;
@@ -106,8 +101,4 @@ const StyledAvatar = styled(Avatar)`
 	height: 2rem;
 	width: 2rem;
 	margin-right: ${(props) => (props.isMobile ? 0 : "0.5rem")};
-`;
-const ResponsiveNavButton = styled(StyledNavButton)`
-	padding: ${(props) =>
-		props.isMobile === true ? "1rem .25rem" : "1rem"} !important;
 `;

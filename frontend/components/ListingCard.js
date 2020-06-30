@@ -7,7 +7,11 @@ import { CardContent, Typography } from "@material-ui/core";
 import Card_withElevate from "./Card_withElevate";
 import CardActionButton from "./CardActionButton";
 import CardImage from "./CardImage";
-export const ListingCard = (props) => {
+
+// ******************
+// component
+// ******************
+const ListingCard = (props) => {
 	const button = (
 		<CardActionButton
 			variant="contained"

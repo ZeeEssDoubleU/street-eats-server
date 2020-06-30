@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Head from "next/head";
-import Link from "next/link";
 // import components
-import { AppBar, Drawer, Typography, Hidden } from "@material-ui/core";
+import { AppBar, Drawer, Typography } from "@material-ui/core";
 import { ShoppingCartOutlinedIcon } from "@material-ui/icons/";
 import Cart from "./Cart";
 import NavMenu from "./NavMenu";
+import NavLink from "./NavLink";
 // import store / utils / hooks
 import useStore from "../store/useStore";
 import { removeCredsFromCookies } from "../store/actions/auth";
@@ -26,11 +26,13 @@ const Layout = (props) => {
 				<Nav>
 					<NavBrand>
 						{/* TODO: will redirect this back to home when homepage is created */}
-						<Link href="/restaurants" passHref>
-							<StyledNavButton className="nav-brand">
-								<Typography variant="h6">Home</Typography>
-							</StyledNavButton>
-						</Link>
+						<NavLink
+							href="/restaurants"
+							className="nav-brand"
+							hideCart="mobile"
+						>
+							<Typography variant="h6">Home</Typography>
+						</NavLink>
 					</NavBrand>
 					<NavMenu />
 				</Nav>
@@ -65,7 +67,7 @@ export default Layout;
 // styles
 // ******************
 
-import { Main, StyledNavButton } from "../styles/elements";
+import { Main } from "../styles/elements";
 
 const Flex = styled.div`
 	display: flex;

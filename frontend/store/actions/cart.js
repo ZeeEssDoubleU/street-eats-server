@@ -41,10 +41,17 @@ export const removeRestaurantFromCart = (id, state, dispatch) => {
 	});
 };
 
-export const toggleCart = (state, dispatch, payload) => {
-	console.log("payload:", payload);
+export const toggleCart = (state, dispatch, hideOrShow) => {
+	const payload = () => {
+		if (hideOrShow === "hide") {
+			return false;
+		} else if (hideOrShow === "show") {
+			return true;
+		}
+	};
+
 	dispatch({
 		type: actionTypes_cart.TOGGLE_CART,
-		payload: payload === undefined ? !state.displayCart : payload,
+		payload: payload() !== undefined ? payload() : !state.displayCart,
 	});
 };

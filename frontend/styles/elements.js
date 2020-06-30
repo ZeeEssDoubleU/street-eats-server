@@ -5,7 +5,6 @@ import {
 	Card,
 	CardActionArea,
 	CardActions,
-	Button,
 } from "@material-ui/core";
 
 export const Main = styled(Container)`
@@ -29,9 +28,4 @@ export const StyledCardActions = styled(CardActions)`
 
 	padding: 1rem;
 	justify-content: ${(props) => (props.item ? "space-between" : null)};
-`;
-export const StyledNavButton = styled(Button)`
-	height: 4rem;
-	padding: 1rem;
-	color: white;
 `;
