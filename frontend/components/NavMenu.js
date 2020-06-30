@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 // import components
 import { Avatar, Typography, Badge } from "@material-ui/core";
 import { ShoppingCartOutlined } from "@material-ui/icons";
@@ -19,11 +20,20 @@ const NavMenu = (props) => {
 	const { state, dispatch } = useStore();
 	const [cartCount, setCartCount] = useState(getCartCount(state));
 	const currentUser = state.user_current;
+	const router = useRouter();
 
 	// effect to update cart count on state change
 	useEffect(() => {
 		setCartCount(getCartCount(state));
 	}, [state.cart]);
+
+	// effect toggles cart on page change
+	useEffect(() => {
+		// hides cart when navigating to new page on mobile
+		if (state.isMobile) {
+			toggleCart(state, dispatch, false);
+		}
+	}, [router.pathname]);
 
 	const loggedIn = (
 		<>

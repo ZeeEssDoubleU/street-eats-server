@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 // import actions / utils
 import { actionTypes_auth, getUser_current } from "./actions/auth";
 import { actionTypes_cart, getSavedCart } from "./actions/cart";
-import { actionTypes_layout } from "../utils/hooks";
+import { actionTypes_layout, getIsMobile } from "./actions/layout";
 import { Restaurant } from "@material-ui/icons";
 
 // ******************
@@ -15,7 +15,7 @@ export const initState = (theme) =>
 				isAuthenticated: !isEmpty(getUser_current()),
 				user_current: getUser_current(),
 				cart: getSavedCart(),
-				isMobile: window.innerWidth < theme.breakpoints.width("md"),
+				isMobile: getIsMobile(theme),
 				displayCart: false,
 		  }
 		: {};

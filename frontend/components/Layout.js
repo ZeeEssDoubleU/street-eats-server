@@ -17,7 +17,8 @@ import { useWindowResize } from "../utils/hooks";
 // ******************
 const Layout = (props) => {
 	const { state, dispatch } = useStore();
-	useWindowResize(state, dispatch);
+	// hook that sets event listener on window resize
+	useWindowResize();
 
 	return (
 		<Flex>

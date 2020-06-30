@@ -1,42 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@material-ui/core/styles";
+// import store / actions
+import useStore from "../store/useStore";
+import { setIsMobile } from "../store/actions/layout";
 
-export const actionTypes_layout = {
-	SET_IS_MOBILE: "SET_IS_MOBILE",
-};
-
-export const useWindowResize = (state, dispatch) => {
+export const useWindowResize = () => {
 	const theme = useTheme();
+	const { state, dispatch } = useStore();
 
-	const getIsMobile = () => {
-		return (
-			typeof window !== "undefined" &&
-			window.innerWidth < theme.breakpoints.width("md")
-		);
-	};
-
-	const setIsMobile = () => {
-		if (getIsMobile() === true && state.isMobile === false) {
-			dispatch({
-				type: actionTypes_layout.SET_IS_MOBILE,
-				payload: true,
-			});
-		}
-		if (getIsMobile() === false && state.isMobile === true) {
-			dispatch({
-				type: actionTypes_layout.SET_IS_MOBILE,
-				payload: false,
-			});
-		}
+	// function runs on window resize event
+	const onWindowResize = () => {
+		setIsMobile(theme, state, dispatch);
 	};
 
 	// effect adds event listener on window resize to check if app is mobile
 	useEffect(() => {
 		// add listener on mount
-		window.addEventListener("resize", setIsMobile);
+		window.addEventListener("resize", onWindowResize);
 		// remove on unmount
-		return () => window.removeEventListener("resize", setIsMobile);
-	}, ["resize", setIsMobile]);
+		return () => window.removeEventListener("resize", onWindowResize);
+	}, ["resize", onWindowResize]);
 };
 
 useWindowResize.propTypes = {};
