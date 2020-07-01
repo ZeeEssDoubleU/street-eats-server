@@ -6,7 +6,7 @@ import { AppBar, Drawer, Typography } from "@material-ui/core";
 import { ShoppingCartOutlinedIcon } from "@material-ui/icons/";
 import Cart from "./Cart";
 import NavMenu from "./NavMenu";
-import NavLink from "./NavLink";
+import NavButton from "./NavButton";
 // import store / utils / hooks
 import useStore from "../store/useStore";
 import { removeCredsFromCookies } from "../store/actions/auth";
@@ -26,13 +26,9 @@ const Layout = (props) => {
 				<Nav>
 					<NavBrand>
 						{/* TODO: will redirect this back to home when homepage is created */}
-						<NavLink
-							href="/restaurants"
-							className="nav-brand"
-							hideCart
-						>
+						<NavButton href="/restaurants" hideCart>
 							<Typography variant="h6">Home</Typography>
-						</NavLink>
+						</NavButton>
 					</NavBrand>
 					<NavMenu />
 				</Nav>

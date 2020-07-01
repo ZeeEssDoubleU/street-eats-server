@@ -7,10 +7,10 @@ import React, {
 } from "react";
 import isEmpty from "lodash/fp/isEmpty";
 import Cookies from "js-cookie";
-import { useMediaQuery } from "@material-ui/core";
 // import actions / reducers / utils
 import { actionTypes_auth, getUser_current } from "./actions/auth";
 import { actionTypes_cart, updateCheckout } from "./actions/cart";
+import { isSmallerThanLarge } from "./actions/layout";
 import { reducer_root, initState } from "./reducers";
 import { useTheme } from "@material-ui/core/styles";
 
@@ -19,8 +19,11 @@ const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
 	const theme = useTheme();
-	const isSmaller_large = useMediaQuery(theme.breakpoints.down("md"));
-	const [state, dispatch] = useReducer(reducer_root, initState(isSmaller_large));
+	// ! do NOT use MUI's useMediaQuery here.  Behavior not as expected
+	const [state, dispatch] = useReducer(
+		reducer_root,
+		initState(isSmallerThanLarge(theme)),
+	);
 
 	return (
 		<StoreContext.Provider value={{ state, dispatch }}>

@@ -8,14 +8,14 @@ import { actionTypes_layout } from "./actions/layout";
 // ******************
 // initial state
 // ******************
-export const initState = (isSmaller_large) =>
+export const initState = (isSmallerThanLarge) =>
 	typeof window !== "undefined"
 		? {
 				isAuthenticated: !isEmpty(getUser_current()),
 				user_current: getUser_current(),
 				cart: getSavedCart(),
-				isSmaller_large,
-				displayCart: !isSmaller_large,
+				isSmallerThanLarge,
+				displayCart: !isSmallerThanLarge,
 		  }
 		: {};
 
@@ -57,7 +57,7 @@ export const reducer_root = (state, action) => {
 		case actionTypes_layout.SET_IS_MOBILE:
 			return {
 				...state,
-				isSmaller_large: action.payload,
+				isSmallerThanLarge: action.payload,
 			};
 
 		default:

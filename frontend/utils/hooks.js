@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "@material-ui/core/styles";
 // import store / actions
 import useStore from "../store/useStore";
-import { setIsSmaller_large } from "../store/actions/layout";
+import { setIsSmallerThanLarge } from "../store/actions/layout";
 
 export const useWindowResize = () => {
 	const theme = useTheme();
@@ -10,7 +10,7 @@ export const useWindowResize = () => {
 
 	// function runs on window resize event
 	const onWindowResize = () => {
-		setIsSmaller_large(theme, state, dispatch);
+		setIsSmallerThanLarge(theme, state, dispatch);
 	};
 
 	// effect adds event listener on window resize to check if app is mobile

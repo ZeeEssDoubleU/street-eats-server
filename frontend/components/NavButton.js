@@ -12,29 +12,30 @@ import { toggleCart } from "../store/actions/cart";
 // component
 // ******************
 
-const NavLink = (props) => {
+const NavButton = (props) => {
 	const { state, dispatch } = useStore();
 
 	const handleOnClick = () => {
-		if (props.onClick) {
-			props.onClick();
-		}
+		console.log("thing thing thing");
+		console.log("props", props);
 
-		if (props.hideCart) {
-			if (props.hideCart && state.isSmaller_large) {
-				toggleCart(state, dispatch, "hide");
-			}
+		// if props.onClick exists, execute onClick
+		props.onClick && props.onClick();
+
+		// hide cart
+		if (props.hideCart && state.isSmallerThanLarge) {
+			toggleCart(state, dispatch, "hide");
 		}
 	};
 
 	const button = (
-		<StyledButton onClick={handleOnClick} responsive={props.responsive}>
+		<StyledButton onClick={handleOnClick} {...props}>
 			{props.children}
 		</StyledButton>
 	);
 
 	const button_withLink = (
-		<Link href={props.href} passHref>
+		<Link onClick={handleOnClick} {...props}>
 			{button}
 		</Link>
 	);
@@ -42,8 +43,8 @@ const NavLink = (props) => {
 	return props.href ? button_withLink : button;
 };
 
-NavLink.propTypes = {};
-export default NavLink;
+NavButton.propTypes = {};
+export default NavButton;
 
 // ******************
 // styles
@@ -53,7 +54,7 @@ export const StyledButton = styled(Button)`
 	padding: ${(props) => (props.responsive ? "1rem .25rem" : "1rem")};
 	color: white;
 
-	${(props) => props.theme.breakpoints.up("md")} {
+	@media (min-width: 1260px) {
 		padding: 1rem;
 	}
 `;
