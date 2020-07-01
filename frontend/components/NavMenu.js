@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import styled from "styled-components";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -18,14 +18,17 @@ import { removeCredsFromCookies } from "../store/actions/auth";
 // ******************
 const NavMenu = (props) => {
 	const { state, dispatch } = useStore();
-	const [cartCount, setCartCount] = useState(getCartCount(state));
-	const currentUser = state.user_current;
+	const [showAuthButtons, setShowAuthButtons] = useState();
+	const [showBadge, setShowBadge] = useState();
+	const [cartCount, setCartCount] = useState();
 	const router = useRouter();
 
-	// effect to update cart count on state change
-	useEffect(() => {
+	// ! HACK: layoutEffect used to lazy load params for required for client-side hydration
+	useLayoutEffect(() => {
+		setShowAuthButtons(true);
 		setCartCount(getCartCount(state));
-	}, [state.cart]);
+		setShowBadge(true);
+	}, [state.isAuthenticated, state.cart]);
 
 	// effect toggles cart on page change
 	useEffect(() => {
@@ -35,12 +38,16 @@ const NavMenu = (props) => {
 		}
 	}, [router.pathname]);
 
-	const loggedIn = (
+	const renderAuthButtons = state.isAuthenticated ? (
+		// if logged in
 		<>
-			{/* TODO: need to add link to profile/avatar button. Should go back to profile page */}
+			{/* // TODO: need to add link to profile/avatar button. Should go back to profile page */}
 			<NavButton href="/restaurants" responsive hideCart>
-				<StyledAvatar alt={`${currentUser}'s avatar`} />
-				{state.isSmallerThanLarge ? null : currentUser}
+				<StyledAvatar alt={`${state.user_current}'s avatar`}>
+					{/* first letter of user, fallback from alt text not working */}
+					{state.user_current && state.user_current.charAt(0)}
+				</StyledAvatar>
+				{state.isSmallerThanLarge ? null : state.user_current}
 			</NavButton>
 			<NavButton
 				responsive
@@ -50,8 +57,8 @@ const NavMenu = (props) => {
 				Logout
 			</NavButton>
 		</>
-	);
-	const loggedOut = (
+	) : (
+		// if logged out
 		<>
 			<NavButton href="/login" responsive hideCart>
 				Login
@@ -64,15 +71,17 @@ const NavMenu = (props) => {
 
 	return (
 		<Container>
-			{state.isAuthenticated ? loggedIn : loggedOut}
+			{showAuthButtons && renderAuthButtons}
 			<NavButton onClick={() => toggleCart(state, dispatch)}>
-				<Badge
-					// TODO: for some reason badge does NOT display when page refreshed
-					badgeContent={cartCount}
-					color="secondary"
-				>
-					<ShoppingCartOutlined />
-				</Badge>
+				{showBadge && (
+					<Badge
+						// TODO: for some reason badge does NOT display when page refreshed
+						badgeContent={cartCount}
+						color="secondary"
+					>
+						<ShoppingCartOutlined />
+					</Badge>
+				)}
 			</NavButton>
 		</Container>
 	);
