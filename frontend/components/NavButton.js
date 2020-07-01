@@ -16,9 +16,6 @@ const NavButton = (props) => {
 	const { state, dispatch } = useStore();
 
 	const handleOnClick = () => {
-		console.log("thing thing thing");
-		console.log("props", props);
-
 		// if props.onClick exists, execute onClick
 		props.onClick && props.onClick();
 

@@ -16,28 +16,40 @@ const CardImage = (props) => {
 		const imageContainerWidth = imageContainer.offsetWidth;
 		const imageContainerWidth_125x = imageContainerWidth * 1.25;
 
+		// full image quality determined by container dimensions above
 		setImageUrl(
 			`${process.env.NEXT_PUBLIC_CLOUDINARY_URL_PREFIX}/w_${imageContainerWidth_125x},dpr_auto,q_auto/${props.image.hash}${props.image.ext}`,
 		);
 	}, []);
 
 	return (
-		<Container
-			ref={imageContainerRef}
-			placeholder={<StyledSkeleton variant="rect" animation="wave" />}
-		>
-			<LazyLoad once offset={500}>
+		<Container ref={imageContainerRef}>
+			<LazyLoad
+				once
+				offset={500}
+				// placeholder displays until lazy load complete
+				placeholder={<StyledSkeleton variant="rect" animation="wave" />}
+			>
+				{/* low quality image */}
 				<ProgressiveImage_Overlay
 					component="img"
 					src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL_PREFIX}/dpr_auto,q_25,e_vectorize/${props.image.formats.thumbnail.hash}${props.image.ext}`}
 					imageLoaded={imageLoaded}
 				/>
 			</LazyLoad>
+			{/* higher quality image lazyloads closer to view port than low quality image.  Prevents excessive bandwidth */}
 			<LazyLoad once offset={100}>
+				{/* high quality image */}
 				<ProgressiveImage
+					// card media set to 'img' so onload prop works without having to create duplicate Image() to check if loaded
 					component="img"
 					src={imageUrl}
-					onLoad={() => setImageLoaded(true)}
+					onLoad={() => {
+						// only setImageLoaded to true if component loads with image url
+						if (imageUrl !== "undefined") {
+							setImageLoaded(true);
+						}
+					}}
 				/>
 			</LazyLoad>
 		</Container>

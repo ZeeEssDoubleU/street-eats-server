@@ -45,11 +45,11 @@ const restaurant = ({ restaurant, dishes }) => {
 	return (
 		<>
 			<StyledGrid>
-				<RestaurantName>
+				<TitleCard>
 					<Typography variant="h2" component="h1">
 						{restaurant.name}
 					</Typography>
-				</RestaurantName>
+				</TitleCard>
 				{displayDishes}
 			</StyledGrid>
 		</>
@@ -63,7 +63,7 @@ export default restaurant;
 
 import { StyledGrid } from "../../styles/elements";
 
-const RestaurantName = styled.div`
+const TitleCard = styled.div`
 	place-self: center;
 `;
 

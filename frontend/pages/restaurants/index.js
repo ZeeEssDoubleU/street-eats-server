@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 // import components
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import CardActionButton from "../../components/CardActionButton";
 import ListingCard from "../../components/ListingCard";
 
@@ -27,7 +27,16 @@ const restaurants = ({ restaurants }) => {
 		);
 	});
 
-	return <StyledGrid>{displayRestaurants}</StyledGrid>;
+	return (
+		<StyledGrid>
+			<TitleCard>
+				<Typography variant="h2" component="h1">
+					Restaurants
+				</Typography>
+			</TitleCard>
+			{displayRestaurants}
+		</StyledGrid>
+	);
 };
 
 export default restaurants;
@@ -57,3 +66,7 @@ export const getStaticProps = async () => {
 // ******************
 
 import { StyledGrid } from "../../styles/elements";
+
+const TitleCard = styled.div`
+	place-self: center;
+`;
