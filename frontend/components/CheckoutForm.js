@@ -20,6 +20,7 @@ import {
 import StripeInput from "./StripeInput";
 import Card_withElevate from "./Card_withElevate";
 import CardActionButton from "./CardActionButton";
+import CartList from "./CartList";
 // import store / actions / etc
 import { paymentIntent_create } from "../store/actions/auth";
 
@@ -223,6 +224,10 @@ const CheckoutForm = ({ paymentIntent }) => {
 							</Grid>
 						</Grid>
 					</form>
+				</CardContent>
+				<CardHeader title="Shopping Cart:" />
+				<CardContent>
+					<CartList />
 				</CardContent>
 				<StyledCardActions>
 					<CardActionButton
