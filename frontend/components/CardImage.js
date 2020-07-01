@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
+import React, { useState, useLayoutEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 // import components
@@ -8,24 +8,35 @@ import LazyLoad from "react-lazyload";
 
 const CardImage = (props) => {
 	const [imageLoaded, setImageLoaded] = useState(false);
-	const cardMediaRef = useRef();
+	const [imageUrl, setImageUrl] = useState();
+	const imageContainerRef = useRef();
+
+	useLayoutEffect(() => {
+		const imageContainer = imageContainerRef.current;
+		const imageContainerWidth = imageContainer.offsetWidth;
+		const imageContainerWidth_125x = imageContainerWidth * 1.25;
+
+		setImageUrl(
+			`${process.env.NEXT_PUBLIC_CLOUDINARY_URL_PREFIX}/w_${imageContainerWidth_125x},dpr_auto,q_auto/${props.image.hash}${props.image.ext}`,
+		);
+	}, []);
 
 	return (
 		<Container
-			ref={cardMediaRef}
+			ref={imageContainerRef}
 			placeholder={<StyledSkeleton variant="rect" animation="wave" />}
 		>
 			<LazyLoad once offset={500}>
 				<ProgressiveImage_Overlay
 					component="img"
-					src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL_PREFIX}/dpr_auto,q_auto,e_vectorize/${props.image.formats.thumbnail.hash}${props.image.ext}`}
+					src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL_PREFIX}/dpr_auto,q_25,e_vectorize/${props.image.formats.thumbnail.hash}${props.image.ext}`}
 					imageLoaded={imageLoaded}
 				/>
 			</LazyLoad>
 			<LazyLoad once offset={100}>
 				<ProgressiveImage
 					component="img"
-					src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL_PREFIX}/w_1000,dpr_auto,q_auto/${props.image.hash}${props.image.ext}`}
+					src={imageUrl}
 					onLoad={() => setImageLoaded(true)}
 				/>
 			</LazyLoad>
