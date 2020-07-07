@@ -52,7 +52,7 @@ const CartCard = (props) => {
 			<CardContent>
 				<CartCardItems restaurant={props.restaurant} />
 			</CardContent>
-			{router.route === "/checkout/[vendor]" ? null : (
+			{props.cart === "checkout" ? null : (
 				<StyledCardActions>
 					<Link
 						// check if authenticated
@@ -69,8 +69,11 @@ const CartCard = (props) => {
 							variant="contained"
 							color="secondary"
 							fullWidth
+							disabled={props.disabled ? true : false}
 						>
-							Go to Checkout
+							{props.disabled
+								? "Currently in Checkout"
+								: "Go to Checkout"}
 						</CardActionButton>
 					</Link>
 				</StyledCardActions>

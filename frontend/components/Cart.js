@@ -17,7 +17,7 @@ const Cart = (props) => {
 					Shopping Cart:
 				</Typography>
 				{/* // TODO: add cart to database to persist cart between sessions (consider session cookies as well) */}
-				<CartList />
+				<CartList cart="shopping" />
 			</StyledGrid>
 		</Main>
 	);

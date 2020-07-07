@@ -266,9 +266,9 @@ const CheckoutForm = ({ paymentIntent }) => {
 						</Grid>
 					</form>
 				</CardContent>
-				<CardHeader title="Shopping Cart:" />
+				<CardHeader title="Checkout Cart:" />
 				<CardContent>
-					<CartList />
+					<CartList cart="checkout" />
 				</CardContent>
 				<StyledCardActions>
 					<CardActionButton
