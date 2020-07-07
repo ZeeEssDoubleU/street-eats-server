@@ -9,6 +9,15 @@
     "timestamps": true
   },
   "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "order"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
     "address": {
       "type": "string",
       "required": true
@@ -17,11 +26,27 @@
       "type": "string",
       "required": true
     },
+    "state": {
+      "type": "string",
+      "required": true
+    },
+    "postal_code": {
+      "type": "string",
+      "required": true
+    },
+    "restaurant": {
+      "model": "restaurant",
+      "via": "order"
+    },
     "dishes": {
-      "type": "json"
+      "type": "json",
+      "required": true
     },
     "amount": {
       "type": "decimal"
+    },
+    "transaction_id": {
+      "type": "string"
     }
   }
 }

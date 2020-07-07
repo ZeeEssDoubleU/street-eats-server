@@ -11,17 +11,15 @@ import useStore from "../../store/useStore";
 import {
 	paymentIntent_create,
 	paymentIntent_retrieve,
-	paymentIntent_update,
-} from "../../store/actions/order";
+} from "../../store/actions/payment_intent.js";
 import { setRequestHeaders } from "../../store/actions/auth";
+import { cart_filterByRestaurantCheckout } from "../../store/actions/cart";
 
 // ******************
 // component
 // ******************
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-// TODO: think this will just have to come from env var on server
+// Make sure to call `loadStripe` outside of a component’s render to avoid recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_P_KEY);
 
 const checkout = (props) => {
@@ -30,25 +28,13 @@ const checkout = (props) => {
 	// retrieve paymentIntent as soon as checkout opened to track sales funnel
 	const [paymentIntent, setPaymentIntent] = useState();
 
-	const filterCart = async () => {
-		// grab page slug for cart filtering
-		// use window.location instead of router because router incorrect on page refresh
-		// will work, because router.route confirmed below in useEffect
-		const vendorCheckoutSlug = window.location.pathname.split("/")[2];
-
-		// declare checkout items
-		const restaurant = await state.cart?.filter(
-			(restaurant) => restaurant.slug === vendorCheckoutSlug,
-		);
-		const items = await restaurant[0]?.items;
-		return items;
-	};
-
 	const getPaymentIntent = async () => {
-		const items = await filterCart();
+		const restaurant = await cart_filterByRestaurantCheckout(state.cart);
+		const items = restaurant?.items;
 
 		// check if payment intent already exists
 		const paymentIntent_id = await Cookies.get("paymentIntent_id");
+
 		let paymentIntent;
 
 		// if intent exists, GET payment intent
@@ -62,6 +48,7 @@ const checkout = (props) => {
 		// it no intent, CREATE payment intent
 		else {
 			paymentIntent = await paymentIntent_create(items, dispatch);
+			// console.log("paymentIntent_create:", paymentIntent); // ? debug
 
 			// set payment intent id to cookie for future retrieval
 			Cookies.set("paymentIntent_id", paymentIntent.id);
@@ -82,7 +69,7 @@ const checkout = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (router.route === "/checkout/[vendor]") {
+		if (router.route === "/checkout/[vendor]" && state.cart.length > 0) {
 			getPaymentIntent();
 		}
 	}, [router.route, state.cart]);

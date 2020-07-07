@@ -5,10 +5,10 @@ export const actionTypes_cart = {
 	TOGGLE_CART: "TOGGLE_CART",
 };
 
-export const getSavedCart = () =>
+export const cart_getSaved = () =>
 	JSON.parse(localStorage.getItem("cart")) || [];
 
-export const getCartCount = (state) => {
+export const cart_getCount = (state) => {
 	const cart = state.cart || [];
 
 	const cart_counts =
@@ -20,28 +20,28 @@ export const getCartCount = (state) => {
 	return cart_totalCount;
 };
 
-export const addItem = (item, state, dispatch) => {
+export const cart_addItem = (item, state, dispatch) => {
 	dispatch({
 		type: actionTypes_cart.ADD_ITEM,
 		payload: item,
 	});
 };
 
-export const removeItem = (item, state, dispatch) => {
+export const cart_removeItem = (item, state, dispatch) => {
 	dispatch({
 		type: actionTypes_cart.REMOVE_ITEM,
 		payload: item,
 	});
 };
 
-export const removeRestaurantFromCart = (id, state, dispatch) => {
+export const cart_removeRestaurant = (id, state, dispatch) => {
 	dispatch({
 		type: actionTypes_cart.REMOVE_RESTAURANT_FROM_CART,
 		payload: id,
 	});
 };
 
-export const toggleCart = (state, dispatch, hideOrShow) => {
+export const cart_toggle = (state, dispatch, hideOrShow) => {
 	const payload = () => {
 		if (hideOrShow === "hide") {
 			return false;
@@ -54,4 +54,21 @@ export const toggleCart = (state, dispatch, hideOrShow) => {
 		type: actionTypes_cart.TOGGLE_CART,
 		payload: payload() !== undefined ? payload() : !state.displayCart,
 	});
+};
+
+export const cart_filterByRestaurantCheckout = async (cart) => {
+	// console.log("cart:", cart); // ? debug
+
+	// grab page slug for cart filtering
+	// * use window.location instead of router because router incorrect on page refresh
+	const vendorCheckoutSlug = window.location.pathname.split("/")[2];
+
+	// filter restaurant based on checkout page
+	const restaurant = await cart?.filter(
+		(restaurant) => restaurant.slug === vendorCheckoutSlug,
+	);
+	// console.log("restaurant:", restaurant); // ? debug
+
+	// return filtered restaurant
+	return restaurant[0];
 };

@@ -12,7 +12,7 @@ import Card_withElevate from "./Card_withElevate";
 import { Close } from "@material-ui/icons";
 // import store / actions
 import useStore from "../store/useStore";
-import { removeRestaurantFromCart } from "../store/actions/cart";
+import { cart_removeRestaurant } from "../store/actions/cart";
 
 // ******************
 // component
@@ -37,7 +37,7 @@ const CartCard = (props) => {
 						{props.restaurant.name}
 						<CloseButton
 							onClick={() =>
-								removeRestaurantFromCart(
+								cart_removeRestaurant(
 									props.restaurant.id,
 									state,
 									dispatch,

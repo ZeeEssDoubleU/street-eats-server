@@ -8,7 +8,7 @@ import { Grid, Typography } from "@material-ui/core";
 import ListingCard from "../../components/ListingCard";
 // import store
 import useStore from "../../store/useStore";
-import { addItem } from "../../store/actions/cart";
+import { cart_addItem } from "../../store/actions/cart";
 
 // ******************
 // component
@@ -28,7 +28,7 @@ const restaurant = ({ restaurant, dishes }) => {
 					buttonText="Add to Cart"
 					buttonClick={() => {
 						const payload = { dish, restaurant };
-						addItem(payload, state, dispatch);
+						cart_addItem(payload, state, dispatch);
 					}}
 					price={dish.price}
 				/>
@@ -70,8 +70,6 @@ const TitleCard = styled.div`
 // ******************
 // initial props & paths
 // ******************
-// TODO: consider implementing when ready for build
-// TODO: also consider moving restaurant fetching to its own page
 
 // This function gets called at build time
 export const getStaticPaths = async () => {

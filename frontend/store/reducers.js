@@ -2,7 +2,7 @@ import isEmpty from "lodash/fp/isEmpty";
 import Cookies from "js-cookie";
 // import actions / utils
 import { actionTypes_auth, getUser_current } from "./actions/auth";
-import { actionTypes_cart, getSavedCart } from "./actions/cart";
+import { actionTypes_cart, cart_getSaved } from "./actions/cart";
 import { actionTypes_layout } from "./actions/layout";
 
 // ******************
@@ -13,7 +13,7 @@ export const initState = (isSmallerThanLarge) =>
 		? {
 				isAuthenticated: !isEmpty(getUser_current()),
 				user_current: getUser_current(),
-				cart: getSavedCart(),
+				cart: cart_getSaved(),
 				isSmallerThanLarge,
 				displayCart: !isSmallerThanLarge,
 		  }
@@ -37,12 +37,12 @@ export const reducer_root = (state, action) => {
 		case actionTypes_cart.ADD_ITEM:
 			return {
 				...state,
-				cart: reducer_addItem(state.cart, action.payload),
+				cart: reducer_cart_addItem(state.cart, action.payload),
 			};
 		case actionTypes_cart.REMOVE_ITEM:
 			return {
 				...state,
-				cart: reducer_removeItem(state.cart, action.payload),
+				cart: reducer_cart_removeItem(state.cart, action.payload),
 			};
 		case actionTypes_cart.REMOVE_RESTAURANT_FROM_CART:
 			return {
@@ -69,9 +69,9 @@ export const reducer_root = (state, action) => {
 // sub reducers
 // ******************
 
-// TODO: NEED TO MAKE SURE CART ACTIONS CANT BE PERFOMED WITHOUT BEING AUTHENTICATED.  ISAUTHENTICATED = TRUE
+// TODO: need to make sure cart actions cant be performed without being auth.  state.isAuthenticated === true
 // *** add item
-const reducer_addItem = (cart, payload) => {
+const reducer_cart_addItem = (cart, payload) => {
 	const { dish, restaurant } = payload;
 	const newItem = {
 		id: dish.id,
@@ -136,14 +136,14 @@ const reducer_addItem = (cart, payload) => {
 };
 
 // *** remove item
-const reducer_removeItem = (cart, payload) => {
+const reducer_cart_removeItem = (cart, payload) => {
 	const { dish, restaurant } = payload;
-	const removeItem = { id: dish.id };
-	const removeRestaurant = { id: restaurant.id };
+	const cart_removeItem = { id: dish.id };
+	const cart_removeRestaurant = { id: restaurant.id };
 
 	// check if restaurant has been added to cart
 	const restaurantExists = cart.find(
-		(restaurant) => restaurant.id === removeRestaurant.id,
+		(restaurant) => restaurant.id === cart_removeRestaurant.id,
 	);
 
 	// set restaurant to update
@@ -151,17 +151,17 @@ const reducer_removeItem = (cart, payload) => {
 
 	// check if item has been added to existing restaurant
 	const itemExists = updateRestaurant.items.find(
-		(item) => item.id === removeItem.id,
+		(item) => item.id === cart_removeItem.id,
 	);
 
 	// UPDATE restaurant cart items
 	updateRestaurant.items =
 		itemExists.quantity === 1
 			? // if there is only 1 item, remove the item completely
-			  updateRestaurant.items.filter((item) => item.id !== removeItem.id)
+			  updateRestaurant.items.filter((item) => item.id !== cart_removeItem.id)
 			: // if there is MORE than 1 of the item, decrement by 1
 			  updateRestaurant.items.map((item) => {
-					if (item.id === removeItem.id) {
+					if (item.id === cart_removeItem.id) {
 						item.quantity -= 1;
 						return item;
 					} else {

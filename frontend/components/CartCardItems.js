@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { ButtonGroup, Button, Typography } from "@material-ui/core";
 // import store
 import useStore from "../store/useStore";
-import { addItem, removeItem } from "../store/actions/cart";
+import { cart_addItem, cart_removeItem } from "../store/actions/cart";
 
 // ******************
 // component
@@ -33,7 +33,7 @@ const CardCardItems = ({ restaurant }) => {
 								onClick={() => {
 									const dish = item;
 									const payload = { dish, restaurant };
-									removeItem(payload, state, dispatch);
+									cart_removeItem(payload, state, dispatch);
 								}}
 							>
 								-
@@ -43,7 +43,7 @@ const CardCardItems = ({ restaurant }) => {
 								onClick={() => {
 									const dish = item;
 									const payload = { dish, restaurant };
-									addItem(payload, state, dispatch);
+									cart_addItem(payload, state, dispatch);
 								}}
 							>
 								+

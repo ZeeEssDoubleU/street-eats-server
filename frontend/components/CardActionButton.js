@@ -25,5 +25,5 @@ export default CardActionButton;
 // ******************
 
 const StyledButton = styled(Button)`
-	cursor: ${(props) => (props.noClick ? "pointer" : "default")};
+	cursor: ${(props) => (props.noClick ? "default" : "pointer")};
 `;

@@ -1,5 +1,5 @@
 // import actions
-import { toggleCart } from "./cart";
+import { cart_toggle } from "./cart";
 
 export const actionTypes_layout = {
 	SET_IS_MOBILE: "SET_IS_MOBILE",
@@ -17,7 +17,7 @@ export const setIsSmallerThanLarge = (theme, state, dispatch) => {
 		state.isSmallerThanLarge === false &&
 		isSmallerThanLarge(theme) === true
 	) {
-		toggleCart(state, dispatch, "hide");
+		cart_toggle(state, dispatch, "hide");
 
 		dispatch({
 			type: actionTypes_layout.SET_IS_MOBILE,

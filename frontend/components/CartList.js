@@ -15,7 +15,7 @@ const Cart = (props) => {
 	const { state } = useStore();
 	const router = useRouter();
 
-	// TODO: NEED TO CREATE DISPLAY FOR PAGE (SINGLE RESTAURANT) ONLY
+	// TODO: create display (toggle button) to display single restaurant only
 	const cartList =
 		state.cart?.length === 0 ? (
 			// if cart length equals 0, display empty

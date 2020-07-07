@@ -20,9 +20,6 @@ export const StyledGrid = styled.div`
 	justify-content: center;
 	grid-gap: ${(props) => props.theme.spacing(2) + "px"};
 `;
-export const StyledActionArea = styled(CardActionArea)`
-	cursor: default;
-`;
 export const StyledCardActions = styled(CardActions)`
 	display: flex;
 

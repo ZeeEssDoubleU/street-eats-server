@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from "@material-ui/core";
 // import store / actions
 import useStore from "../store/useStore";
-import { toggleCart } from "../store/actions/cart";
+import { cart_toggle } from "../store/actions/cart";
 
 // ******************
 // component
@@ -21,7 +21,7 @@ const NavButton = (props) => {
 
 		// hide cart
 		if (props.hideCart && state.isSmallerThanLarge) {
-			toggleCart(state, dispatch, "hide");
+			cart_toggle(state, dispatch, "hide");
 		}
 	};
 

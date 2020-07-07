@@ -22,7 +22,13 @@ import Card_withElevate from "./Card_withElevate";
 import CardActionButton from "./CardActionButton";
 import CartList from "./CartList";
 // import store / actions / etc
-import { paymentIntent_create } from "../store/actions/auth";
+import useStore from "../store/useStore";
+import { paymentIntent_create } from "../store/actions/payment_intent";
+import {
+	cart_filterByRestaurantCheckout,
+	cart_removeRestaurant,
+} from "../store/actions/cart";
+import { createOrder } from "../store/actions/order";
 
 // ******************
 // component
@@ -31,8 +37,10 @@ import { paymentIntent_create } from "../store/actions/auth";
 const CheckoutForm = ({ paymentIntent }) => {
 	const stripe = useStripe();
 	const elements = useElements();
+	const { state, dispatch } = useStore();
 	const [paymentStatus, setPaymentStatus] = useState();
 	const [paymentInfo, setPaymentInfo] = useState({
+		email: state.user_current.email || "",
 		name: "",
 		address: "",
 		city: "",
@@ -70,6 +78,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 					payment_method: {
 						card: elements.getElement(CardNumberElement),
 						billing_details: {
+							email: paymentInfo.email,
 							name: paymentInfo.name,
 							address: {
 								city: paymentInfo.city,
@@ -93,13 +102,34 @@ const CheckoutForm = ({ paymentIntent }) => {
 					// Show a success message to your customer
 					setPaymentStatus("success");
 					console.log("Payment success!");
-					// There's a risk of the customer closing the window before callback execution.
-					// Set up a webhook or plugin to listen for the payment_intent.succeeded event that handles any business critical post-payment actions.
+					// console.log("payment response:", response); // ? debug
+
+					// add completed order to database
+					const cart = await cart_filterByRestaurantCheckout(state.cart);
+					// console.log("cart_filtered:", cart); // ? debug
+
+					const transaction_id = await response.paymentIntent.id;
+					// console.log("transaction_id:", transaction_id); // ? debug
+
+					const order_complete = await createOrder({
+						user: state.user_current,
+						paymentInfo,
+						transaction_id,
+						cart,
+					});
 
 					// destroy paymentIntent cookie to prevent future use (already succeeded)
 					Cookies.remove("paymentIntent_id");
+					// remove restaurant from cart as well
+					const restaurantId = cart.id;
+					cart_removeRestaurant(restaurantId, state, dispatch);
 
-					// TODO: need to delete cart upon success
+					// TODO: create order confirmation page
+					// // push user to order confirmation page
+					// Router.push({
+					// 	pathname: "/checkout/confirmation",
+					// 	query: { order },
+					// });
 				}
 			}
 		} catch (error) {
@@ -133,6 +163,17 @@ const CheckoutForm = ({ paymentIntent }) => {
 						onSubmit={handleSubmit}
 					>
 						<Grid container spacing={3}>
+							<Grid item xs={12}>
+								<TextField
+									required
+									type="email"
+									label="Email"
+									variant="filled"
+									fullWidth
+									value={paymentInfo.email}
+									onChange={handleChange("email")}
+								/>
+							</Grid>
 							<Grid item xs={12}>
 								<TextField
 									required

@@ -32,6 +32,10 @@
     },
     "slug": {
       "type": "string"
+    },
+    "order": {
+      "via": "restaurant",
+      "model": "order"
     }
   }
 }

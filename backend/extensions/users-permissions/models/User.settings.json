@@ -58,6 +58,17 @@
     },
     "last_name": {
       "type": "string"
+    },
+    "orders": {
+      "collection": "order"
+    },
+    "cart": {
+      "via": "user",
+      "model": "cart"
+    },
+    "order": {
+      "via": "user",
+      "model": "order"
     }
   }
 }

@@ -19,13 +19,15 @@ export const setRequestHeaders = () => {
 
 export const saveCredsToCookies = (credentials, state, dispatch) => {
 	if (!process.browser) return;
+	const { id, username, email } = credentials.user;
+	const user = { id, username, email };
 
-	Cookies.set("user_current", credentials.user.username);
+	Cookies.set("user_current", JSON.stringify(user));
 	Cookies.set("jwt", credentials.jwt);
 
 	dispatch({
 		type: actionTypes_auth.SET_CURRENT_USER,
-		payload: credentials.user.username,
+		payload: user,
 	});
 };
 
@@ -45,7 +47,10 @@ export const removeCredsFromCookies = (state, dispatch) => {
 	Router.push("/login");
 };
 
-export const getUser_current = () => Cookies.get("user_current") || null;
+export const getUser_current = () => {
+	const user_current = Cookies.get("user_current") || null;
+	return JSON.parse(user_current);
+};
 
 export const loginUser = async (formData, state, dispatch) => {
 	try {

@@ -10,7 +10,7 @@ import NavButton from "./NavButton";
 // import store / utils
 import useStore from "../store/useStore";
 import { useTheme } from "@material-ui/core/styles";
-import { toggleCart, getCartCount } from "../store/actions/cart";
+import { cart_toggle, cart_getCount } from "../store/actions/cart";
 import { removeCredsFromCookies } from "../store/actions/auth";
 
 // ******************
@@ -26,7 +26,7 @@ const NavMenu = (props) => {
 	// ! HACK: layoutEffect used to lazy load params for required for client-side hydration
 	useLayoutEffect(() => {
 		setShowAuthButtons(true);
-		setCartCount(getCartCount(state));
+		setCartCount(cart_getCount(state));
 		setShowBadge(true);
 	}, [state.isAuthenticated, state.cart]);
 
@@ -34,7 +34,7 @@ const NavMenu = (props) => {
 	useEffect(() => {
 		// hides cart when navigating to new page on mobile
 		if (state.isSmallerThanLarge) {
-			toggleCart(state, dispatch, "hide");
+			cart_toggle(state, dispatch, "hide");
 		}
 	}, [router.pathname]);
 
@@ -43,11 +43,12 @@ const NavMenu = (props) => {
 		<>
 			{/* // TODO: need to add link to profile/avatar button. Should go back to profile page */}
 			<NavButton href="/restaurants" responsive hideCart>
-				<StyledAvatar alt={`${state.user_current}'s avatar`}>
+				<StyledAvatar alt={`${state.user_current.username}'s avatar`}>
 					{/* first letter of user, fallback from alt text not working */}
-					{state.user_current && state.user_current.charAt(0)}
+					{state.user_current.username &&
+						state.user_current.username.charAt(0)}
 				</StyledAvatar>
-				{state.isSmallerThanLarge ? null : state.user_current}
+				{state.isSmallerThanLarge ? null : state.user_current.username}
 			</NavButton>
 			<NavButton
 				responsive
@@ -72,7 +73,7 @@ const NavMenu = (props) => {
 	return (
 		<Container>
 			{showAuthButtons && renderAuthButtons}
-			<NavButton onClick={() => toggleCart(state, dispatch)}>
+			<NavButton onClick={() => cart_toggle(state, dispatch)}>
 				{showBadge && (
 					<Badge
 						// TODO: for some reason badge does NOT display when page refreshed
