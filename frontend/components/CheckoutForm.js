@@ -40,7 +40,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 	const { state, dispatch } = useStore();
 	const [paymentStatus, setPaymentStatus] = useState();
 	const [paymentInfo, setPaymentInfo] = useState({
-		email: state.user_current.email || "",
+		email: state?.user_current?.email || "",
 		name: "",
 		address: "",
 		city: "",
