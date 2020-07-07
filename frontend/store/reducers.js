@@ -15,7 +15,7 @@ export const initState = (isSmallerThanLarge) =>
 				user_current: getUser_current(),
 				cart: cart_getSaved(),
 				isSmallerThanLarge,
-				displayCart: !isSmallerThanLarge,
+				displayCart: false,
 		  }
 		: {};
 
@@ -158,7 +158,9 @@ const reducer_cart_removeItem = (cart, payload) => {
 	updateRestaurant.items =
 		itemExists.quantity === 1
 			? // if there is only 1 item, remove the item completely
-			  updateRestaurant.items.filter((item) => item.id !== cart_removeItem.id)
+			  updateRestaurant.items.filter(
+					(item) => item.id !== cart_removeItem.id,
+			  )
 			: // if there is MORE than 1 of the item, decrement by 1
 			  updateRestaurant.items.map((item) => {
 					if (item.id === cart_removeItem.id) {

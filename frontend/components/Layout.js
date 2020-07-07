@@ -1,24 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import styled from "styled-components";
 import Head from "next/head";
 // import components
 import { AppBar, Drawer, Typography } from "@material-ui/core";
-import { ShoppingCartOutlinedIcon } from "@material-ui/icons/";
 import Cart from "./Cart";
 import NavMenu from "./NavMenu";
 import NavButton from "./NavButton";
 // import store / utils / hooks
 import useStore from "../store/useStore";
-import { removeCredsFromCookies } from "../store/actions/auth";
+import { useTheme } from "@material-ui/core/styles";
+import { cart_toggle } from "../store/actions/cart";
+import { isSmallerThanLarge } from "../store/actions/layout";
 import { useWindowResize } from "../utils/hooks";
 
 // ******************
 // component
 // ******************
 const Layout = (props) => {
+	const theme = useTheme();
 	const { state, dispatch } = useStore();
+
 	// hook that sets event listener on window resize
 	useWindowResize();
+
+	// lazy init cart state until react loaded in client
+	useLayoutEffect(() => {
+		cart_toggle(state, dispatch, isSmallerThanLarge(theme) ? "hide" : "show");
+	}, []);
 
 	return (
 		<Flex>

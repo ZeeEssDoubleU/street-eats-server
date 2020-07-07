@@ -1,15 +1,5 @@
-import React, {
-	createContext,
-	useContext,
-	useEffect,
-	useState,
-	useReducer,
-} from "react";
-import isEmpty from "lodash/fp/isEmpty";
-import Cookies from "js-cookie";
+import React, { createContext, useContext, useReducer } from "react";
 // import actions / reducers / utils
-import { actionTypes_auth, getUser_current } from "./actions/auth";
-import { actionTypes_cart, updateCheckout } from "./actions/cart";
 import { isSmallerThanLarge } from "./actions/layout";
 import { reducer_root, initState } from "./reducers";
 import { useTheme } from "@material-ui/core/styles";
