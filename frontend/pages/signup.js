@@ -74,23 +74,21 @@ const signup = (props) => {
 			<Card_withElevate>
 				<CardHeader title="Sign Up" />
 				<CardContent>
-					<form
-						autoComplete="off"
-						id="form-signup"
-						onSubmit={handleSubmit}
-					>
+					<form id="form-signup" onSubmit={handleSubmit}>
 						<Grid>
 							<TextField
 								label="First Name"
 								variant="filled"
 								value={formData.first_name}
 								onChange={handleChange("first_name")}
+								autoComplete="given-name"
 							/>
 							<TextField
 								label="Last Name"
 								variant="filled"
 								value={formData.last_name}
 								onChange={handleChange("last_name")}
+								autoComplete="last-name"
 							/>
 							<TextField
 								required
@@ -98,6 +96,7 @@ const signup = (props) => {
 								variant="filled"
 								value={formData.username}
 								onChange={handleChange("username")}
+								autoComplete="username"
 							/>
 							<TextField
 								required
@@ -106,6 +105,7 @@ const signup = (props) => {
 								type="email"
 								value={formData.email}
 								onChange={handleChange("email")}
+								autoComplete="email"
 							/>
 							{/* custom password input */}
 							<FormControl required variant="filled">
@@ -116,6 +116,7 @@ const signup = (props) => {
 									endAdornment={showPasswordIcon}
 									value={formData.password}
 									onChange={handleChange("password")}
+									autoComplete="new-password"
 								/>
 							</FormControl>
 							{/* custom confirm password input */}
@@ -130,6 +131,7 @@ const signup = (props) => {
 									endAdornment={showPasswordIcon}
 									value={formData.password_confirm}
 									onChange={handleChange("password_confirm")}
+									autoComplete="new-password"
 								/>
 							</FormControl>
 						</Grid>

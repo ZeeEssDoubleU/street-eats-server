@@ -157,11 +157,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 			<Card_withElevate>
 				<CardHeader title="Billing Information:" />
 				<CardContent>
-					<form
-						autoComplete="off"
-						id="form-billing"
-						onSubmit={handleSubmit}
-					>
+					<form id="form-billing" onSubmit={handleSubmit}>
 						<Grid container spacing={3}>
 							<Grid item xs={12}>
 								<TextField
@@ -172,6 +168,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 									fullWidth
 									value={paymentInfo.email}
 									onChange={handleChange("email")}
+									autoComplete="email"
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -182,6 +179,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 									fullWidth
 									value={paymentInfo.name}
 									onChange={handleChange("name")}
+									autoComplete="family-name"
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -192,6 +190,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 									fullWidth
 									value={paymentInfo.address}
 									onChange={handleChange("address")}
+									autoComplete="street-address"
 								/>
 							</Grid>
 							<Grid item xs={12} md={6}>
@@ -202,6 +201,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 									fullWidth
 									value={paymentInfo.city}
 									onChange={handleChange("city")}
+									autoComplete="address-level2"
 								/>
 							</Grid>
 							<Grid item xs={6} md={3}>
@@ -212,6 +212,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 									fullWidth
 									value={paymentInfo.state}
 									onChange={handleChange("state")}
+									autoComplete="address-level1"
 								/>
 							</Grid>
 							<Grid item xs={6} md={3}>
@@ -222,6 +223,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 									fullWidth
 									value={paymentInfo.postal_code}
 									onChange={handleChange("postal_code")}
+									autoComplete="postal-code"
 								/>
 							</Grid>
 							<Grid item xs={12} md={6}>

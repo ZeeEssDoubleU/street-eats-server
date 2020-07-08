@@ -1,9 +1,12 @@
 import React, { useState, useRef } from "react";
+import useLayoutEffect from "../utils/useIsomorphicLayoutEffect";
 import styled from "styled-components";
+import dynamic from "next/dynamic";
 // import components
-import { Card } from "@material-ui/core";
+// ! lazy (dynamic) load component due to React throwing SSR hyrdration warning
+const Card = dynamic(() => import("@material-ui/core/Card"), { ssr: false });
 
-const Card_withElevate = (props) => {
+const Card_withElevate = ({ children }) => {
 	const [raised, setRaised] = useState(false);
 	const focusRef = useRef(false);
 
@@ -23,7 +26,7 @@ const Card_withElevate = (props) => {
 				setRaised(false);
 			}}
 		>
-			{props.children}
+			{children}
 		</StyledCard>
 	);
 };

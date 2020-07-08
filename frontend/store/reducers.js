@@ -15,7 +15,7 @@ export const initState = (isSmallerThanLarge) =>
 				user_current: getUser_current(),
 				cart: cart_getSaved(),
 				isSmallerThanLarge,
-				displayCart: false,
+				display_cart: false,
 		  }
 		: {};
 
@@ -52,7 +52,7 @@ export const reducer_root = (state, action) => {
 		case actionTypes_cart.TOGGLE_CART:
 			return {
 				...state,
-				displayCart: action.payload,
+				display_cart: action.payload,
 			};
 		case actionTypes_layout.SET_IS_MOBILE:
 			return {

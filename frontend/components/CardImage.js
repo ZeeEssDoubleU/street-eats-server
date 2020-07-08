@@ -1,4 +1,5 @@
-import React, { useState, useLayoutEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
+import useLayoutEffect from "../utils/useIsomorphicLayoutEffect";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 // import components
@@ -7,7 +8,7 @@ import { Skeleton } from "@material-ui/lab";
 import LazyLoad from "react-lazyload";
 
 const CardImage = (props) => {
-	const [imageLoaded, setImageLoaded] = useState(false);
+	const [image_loaded, setImageLoaded] = useState(false);
 	const [imageUrl, setImageUrl] = useState();
 	const imageContainerRef = useRef();
 
@@ -34,7 +35,7 @@ const CardImage = (props) => {
 				<ProgressiveImage_Overlay
 					component="img"
 					src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL_PREFIX}/dpr_auto,q_25,e_vectorize/${props.image.formats.thumbnail.hash}${props.image.ext}`}
-					imageLoaded={imageLoaded}
+					image_loaded={image_loaded === true ? "true" : "false"}
 				/>
 			</LazyLoad>
 			{/* higher quality image lazyloads closer to view port than low quality image.  Prevents excessive bandwidth */}
@@ -81,7 +82,7 @@ const ProgressiveImage_Overlay = styled(CardMedia)`
 	width: 100%;
 	height: 100%;
 	filter: blur(4px);
-	opacity: ${(props) => (props.imageLoaded === true ? 0 : 1)};
+	opacity: ${(props) => (props.image_loaded === 'true' ? 0 : 1)};
 	transition: opacity 1s;
 `;
 const ProgressiveImage = styled(CardMedia)`

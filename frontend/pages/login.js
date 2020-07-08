@@ -70,7 +70,7 @@ const login = (props) => {
 				<CardHeader title="Login" />
 				<CardContent>
 					{/* // TODO: need to add form validation (possibly show feedback below fields) */}
-					<form autoComplete="off" id="form-login" onSubmit={handleSubmit}>
+					<form id="form-login" onSubmit={handleSubmit}>
 						<Grid>
 							<TextField
 								required
@@ -79,6 +79,7 @@ const login = (props) => {
 								type="email"
 								value={formData.identifier}
 								onChange={handleChange("identifier")}
+								autoComplete="email"
 							/>
 							{/* custom password input */}
 							<FormControl required fullWidth variant="filled">
@@ -89,6 +90,7 @@ const login = (props) => {
 									endAdornment={showPasswordIcon}
 									value={formData.password}
 									onChange={handleChange("password")}
+									autoComplete="existing-password"
 								/>
 							</FormControl>
 						</Grid>

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useTheme } from "@material-ui/core/styles";
 // import store / actions
 import useStore from "../store/useStore";
 import { setIsSmallerThanLarge } from "../store/actions/layout";
 
-export const useWindowResize = () => {
+// hook runs on window resize
+const useWindowResize = () => {
 	const theme = useTheme();
 	const { state, dispatch } = useStore();
 
@@ -22,4 +23,4 @@ export const useWindowResize = () => {
 	}, ["resize", onWindowResize]);
 };
 
-useWindowResize.propTypes = {};
+export default useWindowResize;

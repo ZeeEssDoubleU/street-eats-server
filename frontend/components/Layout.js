@@ -1,6 +1,8 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
+import useLayoutEffect from "../utils/useIsomorphicLayoutEffect";
 import styled from "styled-components";
 import Head from "next/head";
+import PropTypes from "prop-types";
 // import components
 import { AppBar, Drawer, Typography } from "@material-ui/core";
 import Cart from "./Cart";
@@ -11,7 +13,7 @@ import useStore from "../store/useStore";
 import { useTheme } from "@material-ui/core/styles";
 import { cart_toggle } from "../store/actions/cart";
 import { isSmallerThanLarge } from "../store/actions/layout";
-import { useWindowResize } from "../utils/hooks";
+import useWindowResize from "../utils/onWindowResize";
 
 // ******************
 // component
@@ -44,14 +46,14 @@ const Layout = (props) => {
 			<StyledMain
 				component="main"
 				maxWidth="xl"
-				displayCart={state.displayCart}
+				display_cart={state.display_cart === true ? "true" : "false"}
 			>
 				{props.children}
 			</StyledMain>
 			<StyledDrawer
 				variant="persistent"
 				anchor="right"
-				open={state.displayCart}
+				open={state.display_cart}
 				ModalProps={{
 					keepMounted: true, // Better open performance on mobile.
 				}}
@@ -100,7 +102,9 @@ const StyledMain = styled(Main)`
 
 	${(props) => props.theme.breakpoints.up("lg")} {
 		right: ${(props) =>
-			props.displayCart ? `calc(${props.theme.card.width} + 2rem)` : 0};
+			props.display_cart === "true"
+				? `calc(${props.theme.card.width} + 2rem)`
+				: 0};
 		width: ${(props) => `calc(100% - ${props.theme.card.width} - 2rem)`};
 		transition: right 0.25s, width 0.25s;
 	}

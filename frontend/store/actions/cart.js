@@ -52,7 +52,7 @@ export const cart_toggle = (state, dispatch, hideOrShow) => {
 
 	dispatch({
 		type: actionTypes_cart.TOGGLE_CART,
-		payload: payload() !== undefined ? payload() : !state.displayCart,
+		payload: payload() !== undefined ? payload() : !state.display_cart,
 	});
 };
 

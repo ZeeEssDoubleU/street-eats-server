@@ -18,11 +18,11 @@ import { cart_removeRestaurant } from "../store/actions/cart";
 // component
 // ******************
 
-const CartCard = (props) => {
+const CartCard = ({ disabled, isEmpty, ...props }) => {
 	const { state, dispatch } = useStore();
 	const router = useRouter();
 
-	const displayCard = props.isEmpty ? (
+	const displayCard = isEmpty ? (
 		// if card has empty prop, display empty text
 		<Card_withElevate>
 			<CardHeader title="Cart is empty!" />
@@ -69,11 +69,9 @@ const CartCard = (props) => {
 							variant="contained"
 							color="secondary"
 							fullWidth
-							disabled={props.disabled ? true : false}
+							disabled={disabled}
 						>
-							{props.disabled
-								? "Currently in Checkout"
-								: "Go to Checkout"}
+							{disabled ? "Currently in Checkout" : "Go to Checkout"}
 						</CardActionButton>
 					</Link>
 				</StyledCardActions>
@@ -84,7 +82,10 @@ const CartCard = (props) => {
 	return <>{displayCard}</>;
 };
 
-CartCard.propTypes = {};
+CartCard.propTypes = {
+	disabled: PropTypes.bool,
+	isEmpty: PropTypes.bool,
+};
 export default CartCard;
 
 // ******************

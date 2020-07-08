@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
+import useLayoutEffect from "../utils/useIsomorphicLayoutEffect";
 import styled from "styled-components";
 import Head from "next/head";
 import { useRouter } from "next/router";

@@ -12,15 +12,15 @@ import { cart_toggle } from "../store/actions/cart";
 // component
 // ******************
 
-const NavButton = (props) => {
+const NavButton = ({ responsive, hideCart, onClick, ...props }) => {
 	const { state, dispatch } = useStore();
 
 	const handleOnClick = () => {
-		// if props.onClick exists, execute onClick
-		props.onClick && props.onClick();
+		// if onClick exists, execute onClick
+		onClick && onClick();
 
 		// hide cart
-		if (props.hideCart && state.isSmallerThanLarge) {
+		if (hideCart && state.isSmallerThanLarge) {
 			cart_toggle(state, dispatch, "hide");
 		}
 	};
@@ -31,16 +31,20 @@ const NavButton = (props) => {
 		</StyledButton>
 	);
 
-	const button_withLink = (
-		<Link onClick={handleOnClick} {...props}>
-			{button}
-		</Link>
+	const formatButton = props.href ? (
+		<Link {...props}>{button}</Link>
+	) : (
+		<>{button}</>
 	);
 
-	return props.href ? button_withLink : button;
+	return formatButton;
 };
 
-NavButton.propTypes = {};
+NavButton.propTypes = {
+	responsive: PropTypes.bool,
+	hideCart: PropTypes.bool,
+	onClick: PropTypes.func,
+};
 export default NavButton;
 
 // ******************

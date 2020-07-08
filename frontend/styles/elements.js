@@ -22,7 +22,6 @@ export const StyledGrid = styled.div`
 `;
 export const StyledCardActions = styled(CardActions)`
 	display: flex;
-
 	padding: 1rem;
 	justify-content: ${(props) => (props.item ? "space-between" : null)};
 `;

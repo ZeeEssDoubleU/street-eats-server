@@ -38,7 +38,7 @@ const ListingCard = (props) => {
 				</Typography>
 				<Typography>{props.description}</Typography>
 			</CardContent>
-			<StyledCardActions item>
+			<StyledCardActions item="true">
 				{buttonType}
 				{props.price && (
 					<CardActionButton noClick>
