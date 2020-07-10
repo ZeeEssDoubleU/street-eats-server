@@ -13,7 +13,7 @@ const PrivateRoute = ({ isAuth, ...props }) => {
 	const router = useRouter();
 
 	const auths_areValid =
-		state.isAuthenticated && isAuth === true && creds_areValid();
+		isAuth === true || (state.isAuthenticated && creds_areValid());
 
 	// effect can only run in browser
 	useLayoutEffect(() => {
