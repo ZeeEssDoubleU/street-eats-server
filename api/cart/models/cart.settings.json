@@ -9,17 +9,17 @@
     "timestamps": true
   },
   "attributes": {
-    "user": {
-      "plugin": "users-permissions",
-      "model": "user",
-      "via": "cart"
-    },
     "dishes": {
       "type": "json"
     },
     "amount": {
       "type": "decimal",
       "required": false
+    },
+    "user": {
+      "via": "cart",
+      "plugin": "users-permissions",
+      "model": "user"
     }
   }
 }

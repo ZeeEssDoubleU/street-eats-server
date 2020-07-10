@@ -33,9 +33,13 @@
     "slug": {
       "type": "string"
     },
-    "order": {
-      "via": "restaurant",
-      "model": "order"
+    "orders": {
+      "collection": "order",
+      "via": "restaurant"
+    },
+    "phone": {
+      "type": "string",
+      "required": true
     }
   }
 }

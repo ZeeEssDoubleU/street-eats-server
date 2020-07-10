@@ -13,11 +13,11 @@ const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
 module.exports = {
   create: async (ctx) => {
     const { user, paymentInfo, transaction_id, cart } = ctx.request.body;
-    // console.log("transaction_id - create order:", transaction_id); // ? debug
+    // console.log("paymentInfo - create order:", paymentInfo); // ? debug
 
     const { id: user_id, username } = user;
-    const { name, address, city, state, postal_code } = paymentInfo;
-    const { id: restaurant_id, name: restaurant_name, items: dishes } = cart;
+    const { email, name, address, city, state, postal_code } = paymentInfo;
+    const { id: restaurant_id, items: dishes } = cart;
 
     // calc cost of items
     const amount = strapi.services.order.dishes_calcCost(dishes);
@@ -30,6 +30,7 @@ module.exports = {
     try {
       const entity = await strapi.services.order.create({
         user: user_id,
+        email,
         name,
         address,
         city,
@@ -40,6 +41,21 @@ module.exports = {
         amount,
         transaction_id,
       });
+
+      // console.log("entity:", entity); // ? debug
+      // console.log("restaurant.image:", entity.restaurant.image); // ? debug
+
+      // * format properties to minimze payload returned to client
+      const user_format = {
+        username: entity.user.username,
+        email: entity.user.email,
+      };
+      const restaurant_format = {
+        name: entity.restaurant.name,
+        phone: entity.restaurant.phone,
+      };
+      entity.user = user_format;
+      entity.restaurant = restaurant_format;
 
       return sanitizeEntity(entity, { model: strapi.models.order });
     } catch (error) {
