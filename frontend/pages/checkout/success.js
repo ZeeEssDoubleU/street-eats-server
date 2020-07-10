@@ -1,6 +1,6 @@
 // import components
 import SuccessPage from "../../components/Checkout/SuccessPage";
-import PrivateRoute from "../../components/PrivateRoute";
+import PrivateRoute from "../../components/Auth/PrivateRoute";
 // import utils
 import { creds_areValid } from "../../store/actions/auth";
 

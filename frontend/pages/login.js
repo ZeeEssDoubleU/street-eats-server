@@ -1,5 +1,5 @@
 // import components
-import LoginPage from "../components/Login/LoginPage";
+import LoginPage from "../components/Auth/LoginPage";
 
 // ******************
 // component

@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 // import components
 import {
-	Container,
 	CardHeader,
 	CardContent,
 	Grid,
 	TextField,
+	FormHelperText,
 } from "@material-ui/core";
 import {
 	useStripe,
@@ -23,10 +23,7 @@ import CartList from "../Cart/CartList";
 // import store / actions / etc
 import useStore from "../../store/useStore";
 import { paymentIntent_create } from "../../store/actions/payment_intent";
-import {
-	cart_filterByRestaurantCheckout,
-	cart_removeRestaurant,
-} from "../../store/actions/cart";
+import { cart_filterByRestaurantCheckout } from "../../store/actions/cart";
 import { createOrder } from "../../store/actions/order";
 import { creds_areValid } from "../../store/actions/auth";
 import cookies from "../../utils/cookies";
@@ -126,9 +123,6 @@ const CheckoutForm = ({ paymentIntent }) => {
 
 					// destroy paymentIntent cookie to prevent future use (already succeeded)
 					cookies.remove("paymentIntent_id");
-					// remove restaurant from cart as well
-					// const restaurantId = cart.id;
-					// cart_removeRestaurant(restaurantId, state, dispatch);
 
 					// TODO: create order confirmation page
 					// push user to order confirmation page
@@ -159,146 +153,148 @@ const CheckoutForm = ({ paymentIntent }) => {
 	};
 
 	return (
-		<Container maxWidth="sm">
-			<Card_withElevate>
-				<CardHeader title="Billing Information:" />
-				<CardContent>
-					<form id="form-billing" onSubmit={handleSubmit}>
-						<Grid container spacing={3}>
-							<Grid item xs={12}>
-								<TextField
-									required
-									type="email"
-									label="Email"
-									variant="filled"
-									fullWidth
-									value={paymentInfo.email}
-									onChange={handleChange("email")}
-									autoComplete="email"
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									required
-									label="Full Name"
-									variant="filled"
-									fullWidth
-									value={paymentInfo.name}
-									onChange={handleChange("name")}
-									autoComplete="name"
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									required
-									label="Address"
-									variant="filled"
-									fullWidth
-									value={paymentInfo.address}
-									onChange={handleChange("address")}
-									autoComplete="street-address"
-								/>
-							</Grid>
-							<Grid item xs={12} md={6}>
-								<TextField
-									required
-									label="City"
-									variant="filled"
-									fullWidth
-									value={paymentInfo.city}
-									onChange={handleChange("city")}
-									autoComplete="address-level2"
-								/>
-							</Grid>
-							<Grid item xs={6} md={3}>
-								<TextField
-									required
-									label="State"
-									variant="filled"
-									fullWidth
-									value={paymentInfo.state}
-									onChange={handleChange("state")}
-									autoComplete="address-level1"
-								/>
-							</Grid>
-							<Grid item xs={6} md={3}>
-								<TextField
-									required
-									label="Zip Code"
-									variant="filled"
-									fullWidth
-									value={paymentInfo.postal_code}
-									onChange={handleChange("postal_code")}
-									autoComplete="postal-code"
-								/>
-							</Grid>
-							<Grid item xs={12} md={6}>
-								<TextField
-									required
-									InputProps={{
-										inputComponent: StripeInput,
-										inputProps: { component: CardNumberElement },
-									}}
-									InputLabelProps={{ shrink: true }}
-									label="Card Number"
-									variant="filled"
-									fullWidth
-								/>
-							</Grid>
-							<Grid item xs={6} md={3}>
-								<TextField
-									required
-									InputProps={{
-										inputComponent: StripeInput,
-										inputProps: { component: CardCvcElement },
-									}}
-									InputLabelProps={{ shrink: true }}
-									label=" "
-									variant="filled"
-									fullWidth
-								/>
-							</Grid>
-							<Grid item xs={6} md={3}>
-								<TextField
-									required
-									InputProps={{
-										inputComponent: StripeInput,
-										inputProps: { component: CardExpiryElement },
-									}}
-									InputLabelProps={{ shrink: true }}
-									label="Expiry"
-									variant="filled"
-									fullWidth
-								/>
-							</Grid>
+		<Card_withElevate>
+			<CardHeader title="Billing Information:" />
+			<CardContent>
+				<form id="form-billing" onSubmit={handleSubmit}>
+					<Grid container spacing={3}>
+						<Grid item xs={12}>
+							<TextField
+								required
+								type="email"
+								label="Email"
+								variant="filled"
+								fullWidth
+								value={paymentInfo.email}
+								onChange={handleChange("email")}
+								autoComplete="email"
+							/>
 						</Grid>
-					</form>
-				</CardContent>
-				<CardHeader title="Checkout Cart:" />
-				<CardContent>
-					<CartList cart="checkout" />
-				</CardContent>
-				<StyledCardActions>
-					<CardActionButton
-						color="secondary"
-						variant="contained"
-						type="submit"
-						form="form-billing"
-						disabled={
-							paymentStatus === "loading" ||
-							paymentStatus === "processing"
-								? true
-								: false
-						}
-					>
-						{orderButtonText(paymentStatus)}
-					</CardActionButton>
-					<CardActionButton onClick={() => router.back()}>
-						Cancel
-					</CardActionButton>
-				</StyledCardActions>
-			</Card_withElevate>
-		</Container>
+						<Grid item xs={12}>
+							<TextField
+								required
+								label="Full Name"
+								variant="filled"
+								fullWidth
+								value={paymentInfo.name}
+								onChange={handleChange("name")}
+								autoComplete="name"
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								required
+								label="Address"
+								variant="filled"
+								fullWidth
+								value={paymentInfo.address}
+								onChange={handleChange("address")}
+								autoComplete="street-address"
+							/>
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<TextField
+								required
+								label="City"
+								variant="filled"
+								fullWidth
+								value={paymentInfo.city}
+								onChange={handleChange("city")}
+								autoComplete="address-level2"
+							/>
+						</Grid>
+						<Grid item xs={6} md={3}>
+							<TextField
+								required
+								label="State"
+								variant="filled"
+								fullWidth
+								value={paymentInfo.state}
+								onChange={handleChange("state")}
+								autoComplete="address-level1"
+							/>
+						</Grid>
+						<Grid item xs={6} md={3}>
+							<TextField
+								required
+								label="Zip Code"
+								variant="filled"
+								fullWidth
+								value={paymentInfo.postal_code}
+								onChange={handleChange("postal_code")}
+								autoComplete="postal-code"
+							/>
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<TextField
+								required
+								InputProps={{
+									inputComponent: StripeInput,
+									inputProps: { component: CardNumberElement },
+								}}
+								InputLabelProps={{ shrink: true }}
+								label="Card Number"
+								variant="filled"
+								fullWidth
+								placeholder="4242 4242 4242 4242"
+							/>
+							<FormHelperText>
+								Do NOT enter your real credit card info. Enter "4242
+								4242 4242 4242" for testing.
+							</FormHelperText>
+						</Grid>
+						<Grid item xs={6} md={3}>
+							<TextField
+								required
+								InputProps={{
+									inputComponent: StripeInput,
+									inputProps: { component: CardCvcElement },
+								}}
+								InputLabelProps={{ shrink: true }}
+								label=" "
+								variant="filled"
+								fullWidth
+							/>
+						</Grid>
+						<Grid item xs={6} md={3}>
+							<TextField
+								required
+								InputProps={{
+									inputComponent: StripeInput,
+									inputProps: { component: CardExpiryElement },
+								}}
+								InputLabelProps={{ shrink: true }}
+								label="Expiry"
+								variant="filled"
+								fullWidth
+							/>
+						</Grid>
+					</Grid>
+				</form>
+			</CardContent>
+			<CardHeader title="Checkout Cart:" />
+			<CardContent>
+				<CartList cart="checkout" />
+			</CardContent>
+			<StyledCardActions>
+				<CardActionButton
+					color="secondary"
+					variant="contained"
+					type="submit"
+					form="form-billing"
+					disabled={
+						paymentStatus === "loading" || paymentStatus === "processing"
+							? true
+							: false
+					}
+				>
+					{orderButtonText(paymentStatus)}
+				</CardActionButton>
+				<CardActionButton onClick={() => router.back()}>
+					Cancel
+				</CardActionButton>
+			</StyledCardActions>
+		</Card_withElevate>
 	);
 };
 export default CheckoutForm;

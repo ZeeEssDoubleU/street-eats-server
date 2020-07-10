@@ -14,6 +14,7 @@ import {
 import { cart_filterByRestaurantCheckout } from "../../store/actions/cart";
 import { creds_areValid } from "../../store/actions/auth";
 import cookies from "../../utils/cookies";
+import useLayoutEffect from "../../utils/useIsomorphicLayoutEffect";
 
 // ******************
 // component
@@ -36,7 +37,6 @@ const CheckoutPage = (props) => {
 		const paymentIntent_id = await cookies.get("paymentIntent_id");
 
 		let paymentIntent;
-
 		// if intent exists, GET payment intent
 		if (paymentIntent_id) {
 			paymentIntent = await paymentIntent_retrieve(
@@ -48,21 +48,15 @@ const CheckoutPage = (props) => {
 		// it no intent, CREATE payment intent
 		else {
 			paymentIntent = await paymentIntent_create(items, dispatch);
-			// console.log("paymentIntent_create:", paymentIntent); // ? debug
 
 			// set payment intent id to cookie for future retrieval
-			cookies.set("paymentIntent_id", paymentIntent.id);
+			if (paymentIntent) {
+				cookies.set("paymentIntent_id", paymentIntent.id);
+			}
 		}
 
 		setPaymentIntent(paymentIntent);
 	};
-
-	useEffect(() => {
-		// redirect to restaurants if no cart
-		if (state.cart.length === 0) {
-			router.back();
-		}
-	}, []);
 
 	useEffect(() => {
 		if (router.route === "/checkout/[vendor]" && state.cart.length > 0) {

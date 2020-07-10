@@ -51,6 +51,7 @@ module.exports = {
         email: entity.user.email,
       };
       const restaurant_format = {
+        id: entity.restaurant.id,
         name: entity.restaurant.name,
         phone: entity.restaurant.phone,
       };

@@ -11,8 +11,12 @@ import {
 	Divider,
 } from "@material-ui/core";
 import Card_withElevate from "../../components/Card/Card_withElevate";
-// import utils
+import ErrorMessage from "../Error/ErrorMessage";
+
+// import store/ utils
+import useStore from "../../store/useStore";
 import useLayoutEffect from "../../utils/useIsomorphicLayoutEffect";
+import { cart_removeRestaurant } from "../../store/actions/cart";
 
 // ******************
 // component
@@ -20,21 +24,33 @@ import useLayoutEffect from "../../utils/useIsomorphicLayoutEffect";
 
 const SuccessPage = ({ order, ...props }) => {
 	const router = useRouter();
+	const { state, dispatch } = useStore();
 
 	useLayoutEffect(() => {
-		if (!order) router.push("/restaurants");
+		if (!order) {
+			router.push("/restaurants");
+		} else {
+			// remove restaurant from cart as well
+			const restaurant_id = order.restaurant.id;
+			cart_removeRestaurant(restaurant_id, state, dispatch);
+		}
 	}, []);
 
 	const conditionalDisplay = (order) => {
 		// if no order, display this
 		if (!order) {
-			return <Typography>...Redirecting</Typography>;
+			return (
+				<ErrorMessage
+					title={"Order Unavailable"}
+					message={"There is no order."}
+				/>
+			);
 
 			// if order exists, display this
 		} else {
-			const { id, name, email, address } = order;
-			const { city, state, postal_code, restaurant } = order;
-			const { dishes, amount, created_at } = order;
+			const { id, name, email } = order;
+			const { address, city, address_state, postal_code } = order;
+			const { restaurant, dishes, amount, created_at } = order;
 
 			const formatDate = (date) => {
 				const local = new Date(date);
@@ -62,7 +78,7 @@ const SuccessPage = ({ order, ...props }) => {
 								<Typography>{name}</Typography>
 								<Typography>{address}</Typography>
 								<Typography>
-									{city}, {state} {postal_code}
+									{city}, {address_state} {postal_code}
 								</Typography>
 							</div>
 							<Typography>{email}</Typography>
