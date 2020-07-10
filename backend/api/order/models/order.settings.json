@@ -9,11 +9,6 @@
     "timestamps": true
   },
   "attributes": {
-    "user": {
-      "plugin": "users-permissions",
-      "model": "user",
-      "via": "order"
-    },
     "name": {
       "type": "string",
       "required": true
@@ -34,10 +29,6 @@
       "type": "string",
       "required": true
     },
-    "restaurant": {
-      "model": "restaurant",
-      "via": "order"
-    },
     "dishes": {
       "type": "json",
       "required": true
@@ -47,6 +38,19 @@
     },
     "transaction_id": {
       "type": "string"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "orders"
+    },
+    "restaurant": {
+      "via": "orders",
+      "model": "restaurant"
+    },
+    "email": {
+      "type": "email",
+      "required": true
     }
   }
 }

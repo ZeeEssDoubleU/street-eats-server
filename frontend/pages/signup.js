@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 // import components
 import {
@@ -17,8 +17,8 @@ import {
 	IconButton,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import Card_withElevate from "../components/Card_withElevate";
-import CardActionButton from "../components/CardActionButton";
+import Card_withElevate from "../components/Card/Card_withElevate";
+import CardActionButton from "../components/Card/CardActionButton";
 // import store / utils
 import { saveCredsToCookies } from "../store/actions/auth";
 import useStore from "../store/useStore";
@@ -28,6 +28,7 @@ import { registerUser } from "../store/actions/auth";
 // component
 // ******************
 const signup = (props) => {
+	const router = useRouter();
 	const { state, dispatch } = useStore();
 	const [formData, setFormData] = useState({
 		first_name: "",
@@ -146,7 +147,7 @@ const signup = (props) => {
 					>
 						Register
 					</CardActionButton>
-					<CardActionButton color="primary" onClick={() => Router.back()}>
+					<CardActionButton color="primary" onClick={() => router.back()}>
 						Go Back
 					</CardActionButton>
 				</StyledCardActions>

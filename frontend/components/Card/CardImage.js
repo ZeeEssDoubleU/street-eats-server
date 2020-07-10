@@ -1,11 +1,12 @@
 import React, { useState, useRef } from "react";
-import useLayoutEffect from "../utils/useIsomorphicLayoutEffect";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 // import components
 import { CardMedia } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import LazyLoad from "react-lazyload";
+// import utils
+import useLayoutEffect from "../../utils/useIsomorphicLayoutEffect";
 
 const CardImage = (props) => {
 	const [image_loaded, setImageLoaded] = useState(false);
@@ -82,7 +83,7 @@ const ProgressiveImage_Overlay = styled(CardMedia)`
 	width: 100%;
 	height: 100%;
 	filter: blur(4px);
-	opacity: ${(props) => (props.image_loaded === 'true' ? 0 : 1)};
+	opacity: ${(props) => (props.image_loaded === "true" ? 0 : 1)};
 	transition: opacity 1s;
 `;
 const ProgressiveImage = styled(CardMedia)`

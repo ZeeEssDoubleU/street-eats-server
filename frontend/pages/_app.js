@@ -8,7 +8,7 @@ import theme from "../styles/theme";
 import ResetStyle from "../styles/reset";
 import GlobalStyle from "../styles/global";
 // import components
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/Layout";
 // import store
 import { StoreProvider } from "../store/useStore";
 

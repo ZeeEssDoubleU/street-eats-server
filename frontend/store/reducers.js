@@ -1,5 +1,4 @@
 import isEmpty from "lodash/fp/isEmpty";
-import Cookies from "js-cookie";
 // import actions / utils
 import { actionTypes_auth, getUser_current } from "./actions/auth";
 import { actionTypes_cart, cart_getSaved } from "./actions/cart";

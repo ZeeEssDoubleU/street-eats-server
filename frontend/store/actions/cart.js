@@ -5,21 +5,9 @@ export const actionTypes_cart = {
 	TOGGLE_CART: "TOGGLE_CART",
 };
 
-export const cart_getSaved = () =>
-	JSON.parse(localStorage.getItem("cart")) || [];
-
-export const cart_getCount = (state) => {
-	const cart = state.cart || [];
-
-	const cart_counts =
-		cart.length > 0 ? cart.map((restaurant) => restaurant.items_count) : [0];
-
-	const reducer = (acc, currentVal) => acc + currentVal;
-	const cart_totalCount = cart_counts.reduce(reducer);
-
-	return cart_totalCount;
-};
-
+// ****************
+// actions
+// ****************
 export const cart_addItem = (item, state, dispatch) => {
 	dispatch({
 		type: actionTypes_cart.ADD_ITEM,
@@ -56,6 +44,23 @@ export const cart_toggle = (state, dispatch, hideOrShow) => {
 	});
 };
 
+// ****************
+// helpers
+// ****************
+export const cart_getSaved = () =>
+	JSON.parse(localStorage.getItem("cart")) || [];
+
+export const cart_getCount = (state) => {
+	const cart = state.cart || [];
+
+	const cart_counts =
+		cart.length > 0 ? cart.map((restaurant) => restaurant.items_count) : [0];
+
+	const reducer = (acc, currentVal) => acc + currentVal;
+	const cart_totalCount = cart_counts.reduce(reducer);
+
+	return cart_totalCount;
+};
 export const cart_filterByRestaurantCheckout = async (cart) => {
 	// console.log("cart:", cart); // ? debug
 

@@ -12,6 +12,10 @@ export const createOrder = async (checkoutData) => {
 			checkoutData,
 			setRequestHeaders(),
 		);
+		const order = response.data;
+		// console.log("createOrder response:", order); // ? debug
+
+		return order;
 	} catch (error) {
 		console.log(error);
 	}

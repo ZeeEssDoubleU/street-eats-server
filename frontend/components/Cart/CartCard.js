@@ -5,14 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 // import components
 import { CardHeader, CardContent } from "@material-ui/core";
-import CardActionButton from "./CardActionButton";
+import CardActionButton from "../Card/CardActionButton";
+import Card_withElevate from "../Card/Card_withElevate";
 import CartCardItems from "./CartCardItems";
-import Card_withElevate from "./Card_withElevate";
 // import icons
 import { Close } from "@material-ui/icons";
 // import store / actions
-import useStore from "../store/useStore";
-import { cart_removeRestaurant } from "../store/actions/cart";
+import useStore from "../../store/useStore";
+import { cart_removeRestaurant } from "../../store/actions/cart";
 
 // ******************
 // component
@@ -92,7 +92,7 @@ export default CartCard;
 // styles
 // ******************
 
-import { StyledCardActions } from "../styles/elements";
+import { StyledCardActions } from "../../styles/elements";
 
 const Flex = styled.div`
 	display: flex;

@@ -56,4 +56,4 @@ export default ListingCard;
 // styles
 // ******************
 
-import { StyledCardActions } from "../styles/elements";
+import { StyledCardActions } from "../../styles/elements";

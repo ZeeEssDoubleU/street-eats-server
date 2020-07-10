@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import Router from "next/router";
-import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 // import components
 import {
 	Container,
@@ -18,17 +17,19 @@ import {
 	CardCvcElement,
 } from "@stripe/react-stripe-js";
 import StripeInput from "./StripeInput";
-import Card_withElevate from "./Card_withElevate";
-import CardActionButton from "./CardActionButton";
-import CartList from "./CartList";
+import Card_withElevate from "../Card/Card_withElevate";
+import CardActionButton from "../Card/CardActionButton";
+import CartList from "../Cart/CartList";
 // import store / actions / etc
-import useStore from "../store/useStore";
-import { paymentIntent_create } from "../store/actions/payment_intent";
+import useStore from "../../store/useStore";
+import { paymentIntent_create } from "../../store/actions/payment_intent";
 import {
 	cart_filterByRestaurantCheckout,
 	cart_removeRestaurant,
-} from "../store/actions/cart";
-import { createOrder } from "../store/actions/order";
+} from "../../store/actions/cart";
+import { createOrder } from "../../store/actions/order";
+import { creds_areValid } from "../../store/actions/auth";
+import cookies from "../../utils/cookies";
 
 // ******************
 // component
@@ -37,6 +38,7 @@ import { createOrder } from "../store/actions/order";
 const CheckoutForm = ({ paymentIntent }) => {
 	const stripe = useStripe();
 	const elements = useElements();
+	const router = useRouter();
 	const { state, dispatch } = useStore();
 	const [paymentStatus, setPaymentStatus] = useState();
 	const [paymentInfo, setPaymentInfo] = useState({
@@ -69,6 +71,10 @@ const CheckoutForm = ({ paymentIntent }) => {
 
 		// if stripe or elments have NOT loaded, disable submission
 		if (!stripe || !elements) return;
+
+		// TODO: need to create refresh capability for JWT
+		// if credentials invalid, push router to login
+		if (creds_areValid() === false) router.push("/login");
 
 		try {
 			setPaymentStatus("processing");
@@ -111,7 +117,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 					const transaction_id = await response.paymentIntent.id;
 					// console.log("transaction_id:", transaction_id); // ? debug
 
-					const order_complete = await createOrder({
+					const order = await createOrder({
 						user: state.user_current,
 						paymentInfo,
 						transaction_id,
@@ -119,17 +125,17 @@ const CheckoutForm = ({ paymentIntent }) => {
 					});
 
 					// destroy paymentIntent cookie to prevent future use (already succeeded)
-					Cookies.remove("paymentIntent_id");
+					cookies.remove("paymentIntent_id");
 					// remove restaurant from cart as well
-					const restaurantId = cart.id;
-					cart_removeRestaurant(restaurantId, state, dispatch);
+					// const restaurantId = cart.id;
+					// cart_removeRestaurant(restaurantId, state, dispatch);
 
 					// TODO: create order confirmation page
-					// // push user to order confirmation page
-					// Router.push({
-					// 	pathname: "/checkout/confirmation",
-					// 	query: { order },
-					// });
+					// push user to order confirmation page
+					router.replace({
+						pathname: "/checkout/success",
+						query: { order: JSON.stringify(order) },
+					});
 				}
 			}
 		} catch (error) {
@@ -179,7 +185,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 									fullWidth
 									value={paymentInfo.name}
 									onChange={handleChange("name")}
-									autoComplete="family-name"
+									autoComplete="name"
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -287,7 +293,7 @@ const CheckoutForm = ({ paymentIntent }) => {
 					>
 						{orderButtonText(paymentStatus)}
 					</CardActionButton>
-					<CardActionButton onClick={() => Router.back()}>
+					<CardActionButton onClick={() => router.back()}>
 						Cancel
 					</CardActionButton>
 				</StyledCardActions>
@@ -301,4 +307,4 @@ export default CheckoutForm;
 // styles
 // ******************
 
-import { StyledCardActions } from "../styles/elements";
+import { StyledCardActions } from "../../styles/elements";

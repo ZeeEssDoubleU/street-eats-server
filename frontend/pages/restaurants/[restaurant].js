@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 // import components
 import { Grid, Typography } from "@material-ui/core";
-import ListingCard from "../../components/ListingCard";
+import ListingCard from "../../components/Card/ListingCard";
 // import store
 import useStore from "../../store/useStore";
 import { cart_addItem } from "../../store/actions/cart";

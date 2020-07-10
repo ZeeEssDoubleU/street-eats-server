@@ -1,17 +1,16 @@
 // import components
-import CheckoutPage from "../../components/Checkout/CheckoutPage";
+import SuccessPage from "../../components/Checkout/SuccessPage";
 import PrivateRoute from "../../components/PrivateRoute";
-// import store / actions
+// import utils
 import { creds_areValid } from "../../store/actions/auth";
 
 // ******************
 // component
 // ******************
-
-export default ({ isAuth, ...props }) => {
+export default ({ order, isAuth, ...props }) => {
 	return (
 		<PrivateRoute isAuth={isAuth}>
-			<CheckoutPage {...props} />;
+			<SuccessPage order={order} {...props} />;
 		</PrivateRoute>
 	);
 };
@@ -20,7 +19,9 @@ export default ({ isAuth, ...props }) => {
 // inital props
 // ******************
 export const getServerSideProps = async (ctx, req) => {
+	const order = ctx.query?.order ? JSON.parse(ctx.query.order) : null;
+
 	const isAuth = creds_areValid(ctx);
 
-	return { props: { isAuth } };
+	return { props: { order, isAuth } };
 };

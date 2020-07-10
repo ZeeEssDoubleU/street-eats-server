@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 // import components
 import CartCard from "./CartCard";
 // import store
-import useStore from "../store/useStore";
+import useStore from "../../store/useStore";
 
 // ******************
 // component

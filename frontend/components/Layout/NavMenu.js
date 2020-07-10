@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import useLayoutEffect from "../utils/useIsomorphicLayoutEffect";
+import useLayoutEffect from "../../utils/useIsomorphicLayoutEffect";
 import styled from "styled-components";
 import Head from "next/head";
 import { useRouter } from "next/router";
 // import components
 import { Avatar, Typography, Badge } from "@material-ui/core";
 import { ShoppingCartOutlined } from "@material-ui/icons";
-import Cart from "./Cart";
+import Cart from "../Cart/Cart";
 import NavButton from "./NavButton";
 // import store / utils
-import useStore from "../store/useStore";
+import useStore from "../../store/useStore";
 import { useTheme } from "@material-ui/core/styles";
-import { cart_toggle, cart_getCount } from "../store/actions/cart";
-import { removeCredsFromCookies } from "../store/actions/auth";
+import { cart_toggle, cart_getCount } from "../../store/actions/cart";
+import { logoutUser } from "../../store/actions/auth";
 
 // ******************
 // component
@@ -54,7 +54,7 @@ const NavMenu = (props) => {
 			<NavButton
 				responsive
 				hideCart
-				onClick={() => removeCredsFromCookies(state, dispatch)}
+				onClick={() => logoutUser(state, dispatch)}
 			>
 				Logout
 			</NavButton>

@@ -1,19 +1,19 @@
 import React from "react";
-import useLayoutEffect from "../utils/useIsomorphicLayoutEffect";
+import useLayoutEffect from "../../utils/useIsomorphicLayoutEffect";
 import styled from "styled-components";
 import Head from "next/head";
 import PropTypes from "prop-types";
 // import components
 import { AppBar, Drawer, Typography } from "@material-ui/core";
-import Cart from "./Cart";
+import Cart from "../Cart/Cart";
 import NavMenu from "./NavMenu";
 import NavButton from "./NavButton";
 // import store / utils / hooks
-import useStore from "../store/useStore";
+import useStore from "../../store/useStore";
 import { useTheme } from "@material-ui/core/styles";
-import { cart_toggle } from "../store/actions/cart";
-import { isSmallerThanLarge } from "../store/actions/layout";
-import useWindowResize from "../utils/onWindowResize";
+import { cart_toggle } from "../../store/actions/cart";
+import { isSmallerThanLarge } from "../../store/actions/layout";
+import useWindowResize from "../../utils/onWindowResize";
 
 // ******************
 // component
@@ -73,7 +73,7 @@ export default Layout;
 // styles
 // ******************
 
-import { Main } from "../styles/elements";
+import { Main } from "../../styles/elements";
 
 const Flex = styled.div`
 	display: flex;

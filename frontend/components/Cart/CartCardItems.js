@@ -4,8 +4,8 @@ import styled from "styled-components";
 // import components
 import { ButtonGroup, Button, Typography } from "@material-ui/core";
 // import store
-import useStore from "../store/useStore";
-import { cart_addItem, cart_removeItem } from "../store/actions/cart";
+import useStore from "../../store/useStore";
+import { cart_addItem, cart_removeItem } from "../../store/actions/cart";
 
 // ******************
 // component
@@ -24,7 +24,7 @@ const CardCardItems = ({ restaurant }) => {
 					<GridBetween>
 						<Typography>{item.name}</Typography>
 						<Typography>
-							{item.quantity} x ${item.price}
+							({item.quantity}) x ${item.price}
 						</Typography>
 					</GridBetween>
 					<GridLeft>
@@ -82,11 +82,7 @@ const GridLeft = styled.div`
 	justify-content: left;
 `;
 const ItemCountButton = styled(Button)`
-	&.MuiButton-root {
-		/* set min-width because server side rendering messing up styling */
-		min-width: 0;
-	}
-	height: 1.5rem;
+	padding: 0;
 `;
 const ItemCount = styled(ItemCountButton)`
 	&.Mui-disabled {

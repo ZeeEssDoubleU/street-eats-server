@@ -30,4 +30,4 @@ export default Cart;
 // styles
 // ******************
 
-import { Main, StyledGrid } from "../styles/elements";
+import { Main, StyledGrid } from "../../styles/elements";

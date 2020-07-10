@@ -1,10 +1,15 @@
 import React, { useState, useRef } from "react";
-import useLayoutEffect from "../utils/useIsomorphicLayoutEffect";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 // import components
 // ! lazy (dynamic) load component due to React throwing SSR hyrdration warning
 const Card = dynamic(() => import("@material-ui/core/Card"), { ssr: false });
+// import utils
+import useLayoutEffect from "../../utils/useIsomorphicLayoutEffect";
+
+// ******************
+// component
+// ******************
 
 const Card_withElevate = ({ children }) => {
 	const [raised, setRaised] = useState(false);

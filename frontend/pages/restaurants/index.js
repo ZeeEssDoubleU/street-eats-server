@@ -1,45 +1,14 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import styled from "styled-components";
 // import components
-import { Grid, Typography } from "@material-ui/core";
-import CardActionButton from "../../components/CardActionButton";
-import ListingCard from "../../components/ListingCard";
+import RestaurantsPage from "../../components/Restaurants/RestaurantsPage";
 
 // ******************
 // component
 // ******************
 
-const restaurants = ({ restaurants }) => {
-	const displayRestaurants = restaurants?.map((restaurant) => {
-		return (
-			<Grid item key={restaurant.id}>
-				<ListingCard
-					image={restaurant.image[0]}
-					name={restaurant.name}
-					description={restaurant.description}
-					buttonText="View Menu"
-					hasLink
-					as={`/restaurants/${restaurant.slug}`}
-					href={`/restaurants/[restaurant]`}
-				/>
-			</Grid>
-		);
-	});
-
-	return (
-		<StyledGrid>
-			<TitleCard>
-				<Typography variant="h2" component="h1">
-					Restaurants
-				</Typography>
-			</TitleCard>
-			{displayRestaurants}
-		</StyledGrid>
-	);
+export default ({ restaurants }) => {
+	return <RestaurantsPage restaurants={restaurants} />;
 };
-
-export default restaurants;
 
 // ******************
 // initial props
@@ -60,13 +29,3 @@ export const getStaticProps = async () => {
 		console.error(error);
 	}
 };
-
-// ******************
-// styles
-// ******************
-
-import { StyledGrid } from "../../styles/elements";
-
-const TitleCard = styled.div`
-	place-self: center;
-`;
