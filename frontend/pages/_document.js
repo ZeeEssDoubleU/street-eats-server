@@ -3,6 +3,7 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheets as StyleSheets_mui } from "@material-ui/core/styles";
 import { ServerStyleSheet as StyleSheet_sc } from "styled-components";
 import theme from "../styles/theme";
+import site_metadata from "../site_metadata.js";
 
 export default class MyDocument extends Document {
 	static async getInitialProps(ctx) {
@@ -35,28 +36,17 @@ export default class MyDocument extends Document {
 			styleSheet_sc.seal();
 		}
 	}
-	// render() {
-	// 	return (
-	// 		<Html lang="en">
-	// 			<Head>
-	// 				{/* PWA primary color */}
-	// 				<meta name="theme-color" content={theme.palette.primary.main} />
-	// 				<link
-	// 					rel="stylesheet"
-	// 					href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-	// 				/>
-	// 				<link
-	// 					rel="stylesheet"
-	// 					href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	// 				/>
-	// 			</Head>
-	// 			<body>
-	// 				<Main />
-	// 				<NextScript />
-	// 			</body>
-	// 		</Html>
-	// 	);
-	// }
+	render() {
+		return (
+			<Html>
+				<Head />
+				<body>
+					<Main />
+					<NextScript />
+				</body>
+			</Html>
+		);
+	}
 }
 
 // *** Resolution order

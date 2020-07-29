@@ -12,7 +12,7 @@ import Layout from "../components/Layout/Layout";
 // import store
 import { StoreProvider } from "../store/useStore";
 
-export default ({ Component, pageProps }) => {
+export default function _app({ Component, pageProps }) {
 	// remove server side styles
 	// avoids style duplication when same styles loaded by client
 	const removeServerStyles = async () => {
@@ -40,4 +40,4 @@ export default ({ Component, pageProps }) => {
 			</MuiThemeProvider>
 		</StylesProvider>
 	);
-};
+}

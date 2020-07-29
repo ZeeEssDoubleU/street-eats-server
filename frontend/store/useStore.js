@@ -23,7 +23,7 @@ export const StoreProvider = ({ children }) => {
 };
 
 // useStore hook.  Acts as Consumer through useContext
-export default () => {
+export default function useStore() {
 	const { state, dispatch } = useContext(StoreContext);
 	return { state, dispatch };
-};
+}

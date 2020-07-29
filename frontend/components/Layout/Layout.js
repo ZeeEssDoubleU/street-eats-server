@@ -8,6 +8,7 @@ import { AppBar, Drawer, Typography } from "@material-ui/core";
 import Cart from "../Cart/Cart";
 import NavMenu from "./NavMenu";
 import NavButton from "./NavButton";
+import SEO from "../SEO";
 // import store / utils / hooks
 import useStore from "../../store/useStore";
 import { useTheme } from "@material-ui/core/styles";
@@ -31,37 +32,40 @@ const Layout = (props) => {
 	}, []);
 
 	return (
-		<Flex>
-			<StyledAppBar color="primary">
-				<Nav>
-					<NavBrand>
-						{/* TODO: will redirect this back to home when homepage is created */}
-						<NavButton href="/restaurants" hideCart>
-							<Typography variant="h6">Home</Typography>
-						</NavButton>
-					</NavBrand>
-					<NavMenu />
-				</Nav>
-			</StyledAppBar>
-			<StyledMain
-				component="main"
-				maxWidth="xl"
-				display_cart={state.display_cart === true ? "true" : "false"}
-			>
-				{props.children}
-			</StyledMain>
-			<StyledDrawer
-				variant="persistent"
-				anchor="right"
-				open={state.display_cart}
-				ModalProps={{
-					keepMounted: true, // Better open performance on mobile.
-				}}
-			>
-				<Cart />
-			</StyledDrawer>
-			<footer></footer>
-		</Flex>
+		<>
+			<SEO />
+			<Flex>
+				<StyledAppBar color="primary">
+					<Nav>
+						<NavBrand>
+							{/* TODO: will redirect this back to home when homepage is created */}
+							<NavButton href="/restaurants" hideCart>
+								<Typography variant="h6">Home</Typography>
+							</NavButton>
+						</NavBrand>
+						<NavMenu />
+					</Nav>
+				</StyledAppBar>
+				<StyledMain
+					component="main"
+					maxWidth="xl"
+					display_cart={state.display_cart === true ? "true" : "false"}
+				>
+					{props.children}
+				</StyledMain>
+				<StyledDrawer
+					variant="persistent"
+					anchor="right"
+					open={state.display_cart}
+					ModalProps={{
+						keepMounted: true, // Better open performance on mobile.
+					}}
+				>
+					<Cart />
+				</StyledDrawer>
+				<footer></footer>
+			</Flex>
+		</>
 	);
 };
 

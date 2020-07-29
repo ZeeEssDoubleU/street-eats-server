@@ -1,19 +1,16 @@
-const withPlugins = require("next-compose-plugins");
+const withPWA = require("next-pwa");
 
-const nextConfig = {
-	experimental: {
-		async redirects() {
-			return [
-				// TODO: will remove this once homepage has been created
-				{ source: "/", destination: "/restaurants", permanent: true }, // a permanent redirect
-			];
-		},
+module.exports = withPWA({
+	pwa: {
+		dest: "public",
 	},
-};
-
-module.exports = withPlugins(
-	[
-		// add plugins here..
-	],
-	nextConfig,
-);
+	async redirects() {
+		return [
+			{
+				source: "/",
+				destination: "/restaurants",
+				permanent: true,
+			},
+		];
+	},
+});

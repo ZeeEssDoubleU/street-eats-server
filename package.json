@@ -29,7 +29,9 @@
 	"keywords": [],
 	"author": "Zachary Williams <zak.williams2287@gmail.com>",
 	"license": "MIT",
-	"devDependencies": {},
+	"devDependencies": {
+		"@types/styled-components": "^5.1.1"
+	},
 	"dependencies": {
 		"concurrently": "^5.2.0",
 		"dotenv": "^8.2.0"
