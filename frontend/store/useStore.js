@@ -5,7 +5,7 @@ import { reducer_root, initState } from "./reducers";
 import { useTheme } from "@material-ui/core/styles";
 
 // ! this causing render error on logout button.  May need to move initial logic to useEffect in StoreProvider
-const StoreContext = createContext();
+const StoreContext = createContext(initState);
 
 export const StoreProvider = ({ children }) => {
 	const theme = useTheme();

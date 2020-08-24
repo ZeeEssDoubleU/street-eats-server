@@ -5,6 +5,7 @@ node_modules
 .env.local
 
 # instructions / commands
+aws
 aws.md
 commit.md
 

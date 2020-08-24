@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 import { loadStripe } from "@stripe/stripe-js";
 // import components
-import CheckoutForm from "../../components/Checkout/CheckoutForm";
+import CheckoutForm from "./CheckoutForm";
 import { Elements as StripeElementsProvider } from "@stripe/react-stripe-js";
 // import store / actions / utils
 import useStore from "../../store/useStore";

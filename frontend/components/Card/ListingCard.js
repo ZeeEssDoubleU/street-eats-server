@@ -12,6 +12,8 @@ import CardImage from "./CardImage";
 // component
 // ******************
 const ListingCard = (props) => {
+	// console.log("props.image:", props.image); // ? debug
+
 	const button = (
 		<CardActionButton
 			variant="contained"
