@@ -95,7 +95,6 @@ results
 node_modules
 .node_history
 
-
 ############################
 # Tests
 ############################
@@ -108,9 +107,8 @@ coverage
 ############################
 
 .env
+license.txt
 exports
-.cache
+*.cache
 build
-
-# local env files
-keys_dev.js
+.strapi-updater.json

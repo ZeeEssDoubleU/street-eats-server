@@ -2,24 +2,24 @@
   "kind": "collectionType",
   "collectionName": "carts",
   "info": {
-    "name": "Cart"
+    "name": "cart"
   },
   "options": {
     "increments": true,
     "timestamps": true
   },
   "attributes": {
-    "dishes": {
-      "type": "json"
-    },
-    "amount": {
-      "type": "decimal",
-      "required": false
-    },
     "user": {
       "via": "cart",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "required": true
+    },
+    "dishes": {
+      "type": "json"
+    },
+    "total": {
+      "type": "decimal"
     }
   }
 }

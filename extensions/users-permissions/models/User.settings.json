@@ -3,9 +3,10 @@
   "collectionName": "users-permissions_user",
   "info": {
     "name": "user",
-    "description": ""
+    "description": "end-user fields"
   },
   "options": {
+    "draftAndPublish": false,
     "timestamps": true
   },
   "attributes": {
@@ -30,9 +31,15 @@
       "type": "password",
       "minLength": 6,
       "configurable": false,
-      "private": true
+      "private": true,
+      "required": true
     },
     "resetPasswordToken": {
+      "type": "string",
+      "configurable": false,
+      "private": true
+    },
+    "confirmationToken": {
       "type": "string",
       "configurable": false,
       "private": true
@@ -53,19 +60,23 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "first_name": {
-      "type": "string"
-    },
     "last_name": {
       "type": "string"
     },
-    "orders": {
-      "via": "user",
-      "collection": "order"
+    "first_name": {
+      "type": "string"
     },
     "cart": {
       "model": "cart",
       "via": "user"
+    },
+    "order": {
+      "via": "user",
+      "model": "order"
+    },
+    "payment_intent": {
+      "via": "users_permissions_user",
+      "model": "payment-intent"
     }
   }
 }

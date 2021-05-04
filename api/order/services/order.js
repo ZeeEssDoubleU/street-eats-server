@@ -5,19 +5,18 @@
  * to customize this service
  */
 
-const dishes_calcCost = (dishes) => {
+function items_calcCost(dishes) {
   // figure price of dishes
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
-  const amount =
+  const total =
     dishes && dishes.length > 0
       ? dishes.map((dish) => dish.price * dish.quantity).reduce(reducer)
       : 0;
 
   // calc in cents for stripe (x100 to get dollars)
-  return amount * 100;
-};
+  return total * 100;
+}
 
 module.exports = {
-  // create,
-  dishes_calcCost,
+  items_calcCost,
 };

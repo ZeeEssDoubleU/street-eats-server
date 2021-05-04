@@ -11,8 +11,7 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true,
-      "unique": true
+      "required": true
     },
     "description": {
       "type": "richtext",
@@ -24,11 +23,11 @@
       "allowedTypes": [
         "images"
       ],
-      "plugin": "upload",
-      "required": false
+      "plugin": "upload"
     },
     "price": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     },
     "restaurant": {
       "via": "dishes",

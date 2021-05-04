@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "orders",
   "info": {
-    "name": "order"
+    "name": "order",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -33,24 +35,24 @@
       "type": "json",
       "required": true
     },
-    "amount": {
+    "total": {
       "type": "decimal"
     },
     "transaction_id": {
       "type": "string"
     },
     "user": {
+      "via": "order",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "orders"
-    },
-    "restaurant": {
-      "via": "orders",
-      "model": "restaurant"
+      "model": "user"
     },
     "email": {
       "type": "email",
       "required": true
+    },
+    "restaurant": {
+      "via": "orders",
+      "model": "restaurant"
     }
   }
 }
