@@ -1,43 +1,47 @@
 {
-	"name": "street-eats-v2",
-	"version": "1.0.0",
-	"description": "Street Eats.  A food delivery app.",
-	"main": "index.js",
-	"scripts": {
-		"client": "yarn --cwd client start",
-		"client-dev": "yarn --cwd client dev",
-		"client-build": "yarn --cwd client build",
-		"client-i": "yarn --cwd client install",
-		"client-add": "yarn --cwd client add",
-		"client-upgrade": "yarn --cwd client upgrade",
-		"client-remove": "yarn --cwd client remove",
-		"client-clean": "yarn --cwd client clean",
-		"client-env": "yarn --cwd client env",
-		"server": "yarn --cwd server start",
-		"server-dev": "yarn --cwd server dev",
-		"server-build": "yarn --cwd server build",
-		"server-i": "yarn --cwd server install",
-		"server-add": "yarn --cwd server add",
-		"server-upgrade": "yarn --cwd server upgrade",
-		"server-remove": "yarn --cwd server remove",
-		"server-clean": "yarn --cwd server clean",
-		"all-i": "yarn install && yarn client-i && yarn server-i",
-		"all-upgrade": "yarn upgrade && yarn client-upgrade && yarn server-upgrade",
-		"all-clean": "yarn clean && yarn client-clean && yarn server-clean",
-		"start": "concurrently 'yarn client' 'yarn server'",
-		"dev": "concurrently 'yarn client-dev' 'yarn server-dev'",
-		"build": "yarn server-build && concurrently 'yarn server' 'yarn client-build'",
-		"heroku-postbuild": "yarn all-add && yarn build",
-		"clean": "rm -rf node_modules && rm yarn.lock",
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"env-dupe": "cp .env ./server/.env && cp .env ./client/.env"
-	},
-	"keywords": [],
-	"author": "Zachary Williams <zak.williams2287@gmail.com>",
-	"license": "MIT",
-	"devDependencies": {},
-	"dependencies": {
-		"concurrently": "^6.0.2",
-		"dotenv": "^8.2.0"
-	}
+  "name": "server",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "dev": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "clean": "rm -rf node_modules && rm -rf .cache && rm yarn.lock"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "knex": "^0.95.4",
+    "lodash": "^4.17.21",
+    "npm": "^7.11.2",
+    "pg": "^8.6.0",
+    "slugify": "^1.5.0",
+    "strapi": "^3.6.1",
+    "strapi-admin": "^3.6.1",
+    "strapi-connector-bookshelf": "^3.6.1",
+    "strapi-plugin-content-manager": "^3.6.1",
+    "strapi-plugin-content-type-builder": "^3.6.1",
+    "strapi-plugin-email": "^3.6.1",
+    "strapi-plugin-i18n": "3.6.1",
+    "strapi-plugin-upload": "^3.6.1",
+    "strapi-plugin-users-permissions": "^3.6.1",
+    "strapi-provider-upload-aws-s3": "^3.6.1",
+    "strapi-provider-upload-cloudinary": "^3.6.1",
+    "strapi-utils": "^3.6.1",
+    "stripe": "^8.145.0"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "c0d7e659-d755-4b7b-9b96-30634c40feb9"
+  },
+  "engines": {
+    "node": ">=10.16.0 <=14.x.x",
+    "npm": "^6.0.0"
+  },
+  "license": "MIT"
 }
